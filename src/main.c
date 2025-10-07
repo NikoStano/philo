@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:05:26 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/07 14:47:55 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:26:00 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	create_philosophers(t_simulation *sim)
 	{
 		if (sim->data.nb_philos >= 100)
 		{
-			if (pthread_create(&sim->philos[i].thread, &attr,
+			if (pthread_create(&sim->philos[i].thread, &attr,\
 				philosopher_routine, &sim->philos[i]) != 0)
 			{
 				printf("Error: Failed to create philosopher thread %d\n", i);
@@ -42,8 +42,8 @@ static int	create_philosophers(t_simulation *sim)
 		}
 		else
 		{
-			if (pthread_create(&sim->philos[i].thread, NULL,
-				philosopher_routine, &sim->philos[i]) != 0)
+			if (pthread_create(&sim->philos[i].thread, NULL,\
+			philosopher_routine, &sim->philos[i]) != 0)
 			{
 				printf("Error: Failed to create philosopher thread %d\n", i);
 				return (1);
@@ -78,7 +78,6 @@ static int	join_philosophers(t_simulation *sim)
 static int	start_simulation(t_simulation *sim)
 {
 	sim->data.start_time = get_current_time();
-	
 	if (create_philosophers(sim) != 0)
 		return (1);
 	if (pthread_create(&sim->monitor_thread, NULL, monitor_routine, sim) != 0)

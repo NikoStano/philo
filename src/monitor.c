@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:07:23 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/07 14:45:27 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:26:46 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,13 @@ void	*monitor_routine(void *arg)
 
 	sim = (t_simulation *)arg;
 	if (sim->data.nb_philos >= 100)
-		check_interval = 2000; // 2ms for large groups
+		check_interval = 2000;
 	else if (sim->data.nb_philos >= 50)
-		check_interval = 1000; // 1ms for medium groups
+		check_interval = 1000;
 	else
-		check_interval = 500;  // 0.5ms for small groups
+		check_interval = 500;
 	if (sim->data.nb_philos >= 100)
-		usleep(10000); // 10ms
+		usleep(10000);
 	else
 		usleep(1000);
 	while (1)

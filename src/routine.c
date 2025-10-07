@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:06:20 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/07 14:46:34 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:32:46 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,12 @@ static int	take_forks(t_philo *philo)
 		pthread_mutex_unlock(philo->left_fork);
 		return (1);
 	}
-
-	// For large numbers, use a more sophisticated approach
 	if (philo->data->nb_philos >= 100)
 	{
-		// Use ID-based ordering to reduce contention
 		if (philo->left_fork < philo->right_fork)
 		{
 			pthread_mutex_lock(philo->left_fork);
 			print_status(philo, "has taken a fork");
-			
 			pthread_mutex_lock(&philo->data->stop_mutex);
 			if (philo->data->simulation_stop)
 			{
@@ -40,7 +36,6 @@ static int	take_forks(t_philo *philo)
 				return (1);
 			}
 			pthread_mutex_unlock(&philo->data->stop_mutex);
-
 			pthread_mutex_lock(philo->right_fork);
 			print_status(philo, "has taken a fork");
 		}
@@ -48,7 +43,6 @@ static int	take_forks(t_philo *philo)
 		{
 			pthread_mutex_lock(philo->right_fork);
 			print_status(philo, "has taken a fork");
-			
 			pthread_mutex_lock(&philo->data->stop_mutex);
 			if (philo->data->simulation_stop)
 			{
@@ -57,19 +51,16 @@ static int	take_forks(t_philo *philo)
 				return (1);
 			}
 			pthread_mutex_unlock(&philo->data->stop_mutex);
-
 			pthread_mutex_lock(philo->left_fork);
 			print_status(philo, "has taken a fork");
 		}
 	}
 	else
 	{
-		// Original approach for smaller numbers
 		if (philo->id % 2 == 1)
 		{
 			pthread_mutex_lock(philo->left_fork);
 			print_status(philo, "has taken a fork");
-			
 			pthread_mutex_lock(&philo->data->stop_mutex);
 			if (philo->data->simulation_stop)
 			{
@@ -78,7 +69,6 @@ static int	take_forks(t_philo *philo)
 				return (1);
 			}
 			pthread_mutex_unlock(&philo->data->stop_mutex);
-
 			pthread_mutex_lock(philo->right_fork);
 			print_status(philo, "has taken a fork");
 		}
@@ -86,7 +76,6 @@ static int	take_forks(t_philo *philo)
 		{
 			pthread_mutex_lock(philo->right_fork);
 			print_status(philo, "has taken a fork");
-			
 			pthread_mutex_lock(&philo->data->stop_mutex);
 			if (philo->data->simulation_stop)
 			{
@@ -95,12 +84,10 @@ static int	take_forks(t_philo *philo)
 				return (1);
 			}
 			pthread_mutex_unlock(&philo->data->stop_mutex);
-
 			pthread_mutex_lock(philo->left_fork);
 			print_status(philo, "has taken a fork");
 		}
 	}
-
 	return (0);
 }
 
@@ -114,16 +101,12 @@ void	philo_eat(t_philo *philo)
 {
 	if (take_forks(philo) != 0)
 		return ;
-
 	print_status(philo, "is eating");
-	
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	philo->last_meal_time = get_current_time();
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->data->meal_mutex);
-
 	precise_usleep(philo->data->time_to_eat * 1000);
-	
 	drop_forks(philo);
 }
 
@@ -138,21 +121,15 @@ void	philo_think(t_philo *philo)
 	long	think_time;
 
 	print_status(philo, "is thinking");
-	
-	// Adaptive thinking time
 	if (philo->data->nb_philos >= 100)
-	{
-		// For many philosophers, very short thinking time
 		think_time = 1;
-	}
 	else
 	{
-		// Standard adaptive thinking time for smaller groups
-		think_time = (philo->data->time_to_eat * 2) - philo->data->time_to_sleep;
+		think_time = (philo->data->time_to_eat * 2) \
+		- philo->data->time_to_sleep;
 		if (think_time < 0 || think_time > 600)
 			think_time = 1;
 	}
-	
 	if (think_time > 0)
 		precise_usleep(think_time * 1000);
 }
@@ -160,6 +137,7 @@ void	philo_think(t_philo *philo)
 void	*philosopher_routine(void *arg)
 {
 	t_philo	*philo;
+	long	delay;
 
 	philo = (t_philo *)arg;
 	pthread_mutex_lock(&philo->data->meal_mutex);
@@ -171,7 +149,7 @@ void	*philosopher_routine(void *arg)
 			usleep((philo->id * 1000) % 5000);
 		else if (philo->id % 2 == 0)
 		{
-			long delay = (philo->data->time_to_eat * 800) / 1000;
+			delay = (philo->data->time_to_eat * 800) / 1000;
 			if (delay > 0)
 				precise_usleep(delay);
 		}

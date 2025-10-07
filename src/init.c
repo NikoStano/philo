@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:05:46 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/07 16:20:06 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:31:01 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static int	init_mutexes(t_simulation *sim)
 		return (1);
 	if (pthread_mutex_init(&sim->data.meal_mutex, NULL) != 0)
 		return (1);
-	
 	i = 0;
 	while (i < sim->data.nb_philos)
 	{
@@ -30,7 +29,6 @@ static int	init_mutexes(t_simulation *sim)
 			return (1);
 		i++;
 	}
-	
 	return (0);
 }
 
@@ -46,13 +44,12 @@ static void	init_philosophers(t_simulation *sim)
 		sim->philos[i].last_meal_time = 0;
 		sim->philos[i].state = THINKING;
 		sim->philos[i].data = &sim->data;
-		
 		sim->philos[i].left_fork = &sim->forks[i];
 		if (sim->data.nb_philos == 1)
 			sim->philos[i].right_fork = &sim->forks[i];
 		else
-			sim->philos[i].right_fork = &sim->forks[(i + 1) % sim->data.nb_philos];
-		
+			sim->philos[i].right_fork\
+				= &sim->forks[(i + 1) % sim->data.nb_philos];
 		i++;
 	}
 }
@@ -63,8 +60,10 @@ int	validate_args(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 	{
-		printf("Usage: %s number_of_philosophers <time_to_die> <time_to_eat> ", argv[0]);
-		printf("<time_to_sleep> [number_of_times_each_philosopher_must_eat]\n");
+		printf("Usage: %s number_of_philosophers <time_to_die> \
+			<time_to_eat> ", argv[0]);
+		printf("<time_to_sleep> \
+			[number_of_times_each_philosopher_must_eat]\n");
 		return (1);
 	}
 	i = 1;
@@ -82,20 +81,17 @@ int	validate_args(int argc, char **argv)
 		}
 		i++;
 	}
-	
 	if (ft_atoi(argv[1]) > MAX_PHILOSOPHERS)
 	{
 		printf("Error: Maximum %d philosophers allowed\n", MAX_PHILOSOPHERS);
 		return (1);
 	}
-	
 	return (0);
 }
 
 int	init_simulation(t_simulation *sim, char **argv)
 {
 	memset(sim, 0, sizeof(t_simulation));
-	
 	sim->data.nb_philos = ft_atoi(argv[1]);
 	sim->data.time_to_die = (long)ft_atoi(argv[2]);
 	sim->data.time_to_eat = (long)ft_atoi(argv[3]);
@@ -103,17 +99,13 @@ int	init_simulation(t_simulation *sim, char **argv)
 	sim->data.must_eat_count = -1;
 	sim->data.simulation_stop = 0;
 	sim->data.all_ate = 0;
-	
 	if (argv[5])
 		sim->data.must_eat_count = ft_atoi(argv[5]);
-	
 	if (init_mutexes(sim) != 0)
 	{
 		printf("Error: Failed to initialize mutexes\n");
 		return (1);
 	}
-	
 	init_philosophers(sim);
-	
 	return (0);
 }

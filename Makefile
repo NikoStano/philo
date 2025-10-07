@@ -6,7 +6,7 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/07 16:20:50 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/10/07 17:22:33 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,15 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
+
+norminette:
+	@echo "$(CYAN)[ ℹ ] Running norminette...$(NO_COLOR)"
+	@if command -v python3 -m norminette >/dev/null 2>&1; then \
+		python3 -m norminette | grep -v "Norme: OK" || echo "$(GREEN)[ ✓ ] Norminette passed!$(NO_COLOR)"; \
+	else \
+		echo "$(RED)[ ✗ ] Norminette is not installed. Please install it to run this check.$(NO_COLOR)"; \
+	fi
+	@echo "$(CYAN)[ ℹ ] Norminette check completed.$(NO_COLOR)"
 
 debug: CFLAGS += $(CFLAGS_D)
 debug: re
@@ -165,4 +174,4 @@ test: $(NAME)
 	@$(MAKE) -s test_performance
 	@echo "$(L_GREEN)✓ All tests completed$(NO_COLOR)"
 
-.PHONY: all clean fclean re test test_basic test_edge test_invalid test_helgrind test_performance
+.PHONY: all clean fclean re norminette debug test test_basic test_edge test_invalid test_helgrind test_performance

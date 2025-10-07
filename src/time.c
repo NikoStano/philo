@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:08:37 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/07 14:21:45 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/07 17:23:15 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	precise_usleep(long usec)
 
 	if (usec <= 0)
 		return ;
-	
 	start = get_current_time() * 1000;
 	while (1)
 	{
@@ -52,4 +51,4 @@ void	precise_usleep(long usec)
 			break ;
 		}
 	}
-} 
+}
