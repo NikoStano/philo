@@ -3,8 +3,8 @@
 ## Installation 
 
 ```bash
-git clone git@github.com:NikoStano/philosophers.git
-cd philosophers
+git clone git@github.com:NikoStano/philo.git
+cd philo
 ```
 
 ### Build your project 🚧
@@ -13,12 +13,7 @@ cd philosophers
 make
 ```
 
-### Download my tester 👇 :
+### Tester 👇 :
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/NikoStano/philo_tester/refs/heads/main/install.sh)"
-```
-
-### Usage 👇 :
-```bash
-./test_philo.sh
+make `test`
 ```
