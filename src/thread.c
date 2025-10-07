@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 18:33:05 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/07 18:34:54 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/07 20:06:12 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	create_thread_large(t_simulation *sim, int i, pthread_attr_t *a)
 {
-	if (pthread_create(&sim->philos[i].thread, a, \
-		philosopher_routine, &sim->philos[i]) != 0)
+	if (pthread_create(&sim->philos[i].thread, a,
+			philosopher_routine, &sim->philos[i]) != 0)
 	{
 		printf("Error: Failed to create philosopher thread %d\n", i);
 		pthread_attr_destroy(a);
@@ -26,8 +26,8 @@ static int	create_thread_large(t_simulation *sim, int i, pthread_attr_t *a)
 
 static int	create_thread_small(t_simulation *sim, int i)
 {
-	if (pthread_create(&sim->philos[i].thread, NULL, \
-		philosopher_routine, &sim->philos[i]) != 0)
+	if (pthread_create(&sim->philos[i].thread, NULL,
+			philosopher_routine, &sim->philos[i]) != 0)
 	{
 		printf("Error: Failed to create philosopher thread %d\n", i);
 		return (1);
