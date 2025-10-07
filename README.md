@@ -1,15 +1,19 @@
-# My Tester 👇
+# Philosophers 
 
 ## Installation 
 
-** Build your project **
+```bash
+git clone git@github.com:NikoStano/philosophers.git
+```
 
-### Download tester :
+### Build your project 🚧
+
+### Download my tester 👇 :
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/NikoStano/philo_tester/refs/heads/main/install.sh)"
 ```
 
-### Usage :
+### Usage 👇 :
 ```bash
 ./test_philo.sh
 ```
