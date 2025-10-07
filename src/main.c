@@ -6,57 +6,11 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:05:26 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/07 17:26:00 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/07 18:35:00 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static int	create_philosophers(t_simulation *sim)
-{
-	int				i;
-	pthread_attr_t	attr;
-
-	if (sim->data.nb_philos >= 100)
-	{
-		if (pthread_attr_init(&attr) != 0)
-			return (1);
-		if (pthread_attr_setstacksize(&attr, PTHREAD_STACK_MIN * 4) != 0)
-		{
-			pthread_attr_destroy(&attr);
-			return (1);
-		}
-	}
-	i = 0;
-	while (i < sim->data.nb_philos)
-	{
-		if (sim->data.nb_philos >= 100)
-		{
-			if (pthread_create(&sim->philos[i].thread, &attr,\
-				philosopher_routine, &sim->philos[i]) != 0)
-			{
-				printf("Error: Failed to create philosopher thread %d\n", i);
-				pthread_attr_destroy(&attr);
-				return (1);
-			}
-		}
-		else
-		{
-			if (pthread_create(&sim->philos[i].thread, NULL,\
-			philosopher_routine, &sim->philos[i]) != 0)
-			{
-				printf("Error: Failed to create philosopher thread %d\n", i);
-				return (1);
-			}
-		}
-		if (sim->data.nb_philos >= 100)
-			usleep(100);
-		i++;
-	}
-	if (sim->data.nb_philos >= 100)
-		pthread_attr_destroy(&attr);
-	return (0);
-}
 
 static int	join_philosophers(t_simulation *sim)
 {

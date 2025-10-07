@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:04:40 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/07 14:48:07 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/07 18:36:02 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,14 @@ typedef struct s_simulation
 // main.c
 int		main(int argc, char **argv);
 
+// thread.c
+int		create_philosophers(t_simulation *sim);
+
 // init.c
 int		init_simulation(t_simulation *sim, char **argv);
+int		validate_args(int argc, char **argv);
+
+// parse.c
 int		validate_args(int argc, char **argv);
 
 // utils.c
@@ -80,10 +86,17 @@ void	print_status(t_philo *philo, char *status);
 void	cleanup_simulation(t_simulation *sim);
 
 // routine.c
-void	*philosopher_routine(void *arg);
+int		take_forks(t_philo *philo);
+
+// routine_actions.c
+int		should_stop(t_philo *philo);
 void	philo_eat(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 void	philo_think(t_philo *philo);
+void	philo_loop(t_philo *philo);
+
+// routine_loop.c
+void	*philosopher_routine(void *arg);
 
 // monitor.c
 void	*monitor_routine(void *arg);

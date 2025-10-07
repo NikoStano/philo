@@ -6,7 +6,7 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/07 17:22:33 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/10/07 18:35:52 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,14 @@ DIR_SRCS	=	src/
 DIR_OBJS	=	obj/
 
 SRCS		=	$(DIR_SRCS)init.c \
+				$(DIR_SRCS)parse.c \
 				$(DIR_SRCS)main.c \
+				$(DIR_SRCS)thread.c \
 				$(DIR_SRCS)monitor.c \
+				$(DIR_SRCS)monitor_check.c \
 				$(DIR_SRCS)routine.c \
+				$(DIR_SRCS)routine_loop.c \
+				$(DIR_SRCS)routine_actions.c \
 				$(DIR_SRCS)time.c \
 				$(DIR_SRCS)utils.c
 

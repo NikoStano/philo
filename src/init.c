@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:05:46 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/07 17:31:01 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/07 18:16:26 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,45 +48,10 @@ static void	init_philosophers(t_simulation *sim)
 		if (sim->data.nb_philos == 1)
 			sim->philos[i].right_fork = &sim->forks[i];
 		else
-			sim->philos[i].right_fork\
+			sim->philos[i].right_fork \
 				= &sim->forks[(i + 1) % sim->data.nb_philos];
 		i++;
 	}
-}
-
-int	validate_args(int argc, char **argv)
-{
-	int	i;
-
-	if (argc < 5 || argc > 6)
-	{
-		printf("Usage: %s number_of_philosophers <time_to_die> \
-			<time_to_eat> ", argv[0]);
-		printf("<time_to_sleep> \
-			[number_of_times_each_philosopher_must_eat]\n");
-		return (1);
-	}
-	i = 1;
-	while (i < argc)
-	{
-		if (!is_number(argv[i]))
-		{
-			printf("Error: All arguments must be positive integers\n");
-			return (1);
-		}
-		if (ft_atoi(argv[i]) <= 0)
-		{
-			printf("Error: All arguments must be positive integers\n");
-			return (1);
-		}
-		i++;
-	}
-	if (ft_atoi(argv[1]) > MAX_PHILOSOPHERS)
-	{
-		printf("Error: Maximum %d philosophers allowed\n", MAX_PHILOSOPHERS);
-		return (1);
-	}
-	return (0);
 }
 
 int	init_simulation(t_simulation *sim, char **argv)
