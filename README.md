@@ -4,9 +4,14 @@
 
 ```bash
 git clone git@github.com:NikoStano/philosophers.git
+cd philosophers
 ```
 
 ### Build your project 🚧
+
+```bash
+make
+```
 
 ### Download my tester 👇 :
 ```bash
