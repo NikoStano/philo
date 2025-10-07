@@ -6,15 +6,16 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/07 18:35:52 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/10/07 18:50:00 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	philosophers
 
 CC			=	cc
+# CFLAGS		=	-Wall -Wextra -Werror -pthread 
 CFLAGS		=	-Wall -Wextra -Werror -pthread
-CFLAGS_D	=	-g -fsanitize=thread
+# CFLAGS_D	=	-g -fsanitize=thread
 
 INCLUDE		=	inc
 DIR_SRCS	=	src/
@@ -78,8 +79,8 @@ norminette:
 	fi
 	@echo "$(CYAN)[ ℹ ] Norminette check completed.$(NO_COLOR)"
 
-debug: CFLAGS += $(CFLAGS_D)
-debug: re
+# debug: CFLAGS += $(CFLAGS_D)
+# debug: re
 
 # Test rules
 test_basic:
