@@ -6,11 +6,11 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/07 21:17:57 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/10/07 21:35:42 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 		=	philosophers
+NAME 		=	philo
 
 CC			=	cc
 # CFLAGS		=	-Wall -Wextra -Werror -pthread 
@@ -44,18 +44,19 @@ YELLOW		=	\033[0;33m
 BLUE		=	\033[0;34m
 MAGENTA		=	\033[0;35m
 CYAN		=	\033[0;36m
-RESET	=	\033[0m
+BOLD		=	\033[1m
+RESET		=	\033[0m
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@echo "$(CYAN)[ → ] Linking $(NAME)...$(RESET)"
+	@echo "$(CYAN)[ → ] Linking $(BOLD)$(NAME)...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-	@echo "$(GREEN)[ ✓ ] $(NAME) compiled successfully!$(RESET)"
+	@echo "$(GREEN)[ ✓ ] $(BOLD)$(NAME) compiled successfully!$(RESET)"
 
 $(DIR_OBJS)%.o: $(DIR_SRCS)%.c
 	@mkdir -p $(DIR_OBJS)
-	@echo "$(YELLOW)[ ℹ ] Compiling $<...$(RESET)"
+	@echo "$(YELLOW)[ ℹ ] Compiling $(BOLD)$<...$(RESET)"
 	@$(CC) $(CFLAGS) -MMD -MP -I$(INCLUDE) -c $< -o $@
 
 -include $(DEPS)
@@ -85,7 +86,7 @@ norminette:
 	fi
 	@echo "$(CYAN)[ ℹ ] Norminette check completed.$(RESET)"
 
-test: $(NAME) norminette
+test: norminette
 	@echo "$(YELLOW)╔════════════════════════════════════╗$(RESET)"
 	@echo "$(YELLOW)║   Launching test on philosophers   ║$(RESET)"
 	@echo "$(YELLOW)╚════════════════════════════════════╝$(RESET)"
