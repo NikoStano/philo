@@ -6,14 +6,14 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/07 21:35:42 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/10/16 23:41:45 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	philo
 
 CC			=	cc
-# CFLAGS		=	-Wall -Wextra -Werror -pthread 
+# CFLAGS		=	-Wall -Wextra -Werror -pthread
 CFLAGS		=	-Wall -Wextra -Werror -pthread
 # CFLAGS_D	=	-g -fsanitize=thread
 
@@ -72,37 +72,51 @@ fclean: clean
 re: fclean all
 
 norminette:
-	@echo "$(CYAN)[ ℹ ] Running norminette...$(RESET)"
-	@if command -v python3 >/dev/null 2>&1; then \
-		OUTPUT=$$(python3 -m norminette 2>&1 | grep "Error"); \
-		if [ -z "$$OUTPUT" ]; then \
-			echo "$(GREEN)[ ✓ ] Norminette passed!$(RESET)"; \
-		else \
-			python3 -m norminette 2>&1 | grep -v "Norme: OK"; \
-			echo "$(RED)[ ✗ ] Norminette found errors!$(RESET)"; \
-		fi; \
+	@echo "$(CYAN)[ ℹ ] Running norminette $(BOLD)BY NISTANOJ...$(RESET)"
+	@if command -v norminette > /dev/null 2>&1; then \
+		NORM_CMD="norminette"; \
+	elif command -v python3 -m norminette > /dev/null 2>&1; then \
+		NORM_CMD="python3 -m norminette"; \
 	else \
 		echo "$(RED)[ ✗ ] Norminette is not installed.$(RESET)"; \
-	fi
-	@echo "$(CYAN)[ ℹ ] Norminette check completed.$(RESET)"
+		echo "$(CYAN)[ ℹ ] Norminette check uncompleted.$(RESET)"; \
+		exit 1; \
+	fi; \
+	TARGET="$(filter-out $@,$(MAKECMDGOALS))"; \
+	if [ -z "$$TARGET" ]; then \
+		TARGET="."; \
+	else \
+		echo "$(YELLOW)[ ℹ ] Checking target(s): $(BOLD)$$TARGET$(RESET)"; \
+	fi; \
+	OUTPUT=$$($$NORM_CMD $$TARGET 2>&1) ; \
+	FILTERED=$$(echo "$$OUTPUT" | grep -v ": OK!"); \
+	if [ -n "$$FILTERED" ]; then \
+		$$NORM_CMD $$TARGET | grep -v ": OK!"; \
+		echo "$(RED)[ ✗ ] Norminette found errors !$(RESET)"; \
+	else \
+		echo "$(GREEN)[ ✓ ] Norminette $(BOLD)passed !$(RESET)"; \
+	fi;
 
-test: norminette
+test:
 	@echo "$(YELLOW)╔════════════════════════════════════╗$(RESET)"
-	@echo "$(YELLOW)║   Launching test on philosophers   ║$(RESET)"
+	@echo "$(YELLOW)║      Launching test on philo       ║$(RESET)"
 	@echo "$(YELLOW)╚════════════════════════════════════╝$(RESET)"
-	@echo "$(CYAN)→ Cloning philo_tester...$(RESET)"
-	@git clone -q https://github.com/NikoStano/philo_tester.git
-	@cat philo_tester/test_philo.sh > test_philo.sh
-	@chmod +x test_philo.sh
-	@rm -rf philo_tester
+	@echo "$(CYAN)→ Launching norminette test :$(RESET)"
+	@$(MAKE) -s norminette
+#	@echo "$(CYAN)→ Cloning philo_tester...$(RESET)"
+#	@git clone -q https://github.com/NikoStano/philo_tester.git
+#	@cat philo_tester/test_philo.sh > test_philo.sh
+#	@chmod +x test_philo.sh
+#	@rm -rf philo_tester
 	@echo "$(GREEN)✓ philo_tester cloned successfully!$(RESET)"
 	@echo "$(CYAN)→ Recompiling philosophers for tests...$(RESET)"
 	@$(MAKE) -s re
 	@echo "$(CYAN)→ Running all tests...$(RESET)"
 	@./test_philo.sh || true
 	@echo "$(CYAN)✓ All tests ran! Cleaning up...$(RESET)"
-	@$(MAKE) -s fclean
-	@rm -f test_philo.sh
+	@$(MAKE) fclean
+#	@rm -f test_philo.sh
 	@echo "$(L_GREEN)✓ All tests completed$(RESET)"
+	@exit 0
 
 .PHONY: all clean fclean re norminette test

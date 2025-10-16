@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 18:16:09 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/07 18:16:29 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/16 23:52:32 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ static int	check_argc(int argc, char **argv)
 	if (argc < 5 || argc > 6)
 	{
 		printf("Usage: %s number_of_philosophers ", argv[0]);
-		printf("<time_to_die> <time_to_eat> <time_to_sleep> ");
-		printf("[number_of_times_each_philosopher_must_eat]\n");
+		printf("time_to_die time_to_eat time_to_sleep ");
+		printf("number_of_times_each_philosopher_must_eat\n");
 		return (1);
 	}
 	return (0);
