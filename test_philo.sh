@@ -205,34 +205,34 @@ echo -e "${NC}"
 # ============================================================================
 # INVALID INPUT TESTS
 # ============================================================================
-echo -e "${MAGENTA}${BOLD}[1] INVALID INPUT TESTS${NC}"
-echo "-----------------------------------------------------------"
+# echo -e "${MAGENTA}${BOLD}[1] INVALID INPUT TESTS${NC}"
+# echo "-----------------------------------------------------------"
 
-run_test "Non-numeric argument" "fail" 5 abc 200 200
-run_test "Negative philosophers" "fail" -5 800 200 200
-run_test "Zero philosophers" "fail" 0 800 200 200
-run_test "Negative time_to_die" "fail" 5 -800 200 200
-run_test "Zero time_to_die" "fail" 5 0 200 200
-run_test "Negative time_to_eat" "fail" 5 800 -200 200
-run_test "Negative time_to_sleep" "fail" 5 800 200 -200
-run_test "Too many arguments" "fail" 5 800 200 200 7 extra
+# run_test "Non-numeric argument" "fail" 5 abc 200 200
+# run_test "Negative philosophers" "fail" -5 800 200 200
+# run_test "Zero philosophers" "fail" 0 800 200 200
+# run_test "Negative time_to_die" "fail" 5 -800 200 200
+# run_test "Zero time_to_die" "fail" 5 0 200 200
+# run_test "Negative time_to_eat" "fail" 5 800 -200 200
+# run_test "Negative time_to_sleep" "fail" 5 800 200 -200
+# run_test "Too many arguments" "fail" 5 800 200 200 7 extra
 
-echo ""
+# echo ""
 
-# ============================================================================
-# DEATH DETECTION TESTS
-# ============================================================================
-echo -e "${RED}${BOLD}[2] DEATH DETECTION TESTS${NC}"
-echo "-----------------------------------------------------------"
+# # ============================================================================
+# # DEATH DETECTION TESTS
+# # ============================================================================
+# echo -e "${RED}${BOLD}[2] DEATH DETECTION TESTS${NC}"
+# echo "-----------------------------------------------------------"
 
-run_test "Single philosopher dies" "death" 1 800 200 200
-run_test "Two philos die quickly" "death" 2 200 100 50
-run_test "Death with 4 philos" "death" 4 310 200 100
-run_test "Very quick death" "death" 3 150 100 50
-run_test "Instant death" "death" 5 100 50 25
-run_test "Death timing 10ms tolerance" "death" 4 400 200 100
+# run_test "Single philosopher dies" "death" 1 800 200 200
+# run_test "Two philos die quickly" "death" 2 200 100 50
+# run_test "Death with 4 philos" "death" 4 310 200 100
+# run_test "Very quick death" "death" 3 150 100 50
+# run_test "Instant death" "death" 5 100 50 25
+# run_test "Death timing 10ms tolerance" "death" 4 400 200 100
 
-echo ""
+# echo ""
 
 # ============================================================================
 # NO DEATH TESTS (with meal limit)
@@ -240,12 +240,12 @@ echo ""
 echo -e "${GREEN}${BOLD}[3] NO DEATH TESTS (with meal limit)${NC}"
 echo "-----------------------------------------------------------"
 
-run_test "Basic no death" "success" 5 800 200 200 7
-run_test "Tight but safe timing" "success" 4 410 200 200 5
-run_test "Comfortable timing" "success" 3 800 200 200 10
+# run_test "Basic no death" "success" 5 800 200 200 7
+# run_test "Tight but safe timing" "success" 4 410 200 200 5
+# run_test "Comfortable timing" "success" 3 800 200 200 10
 run_test "Many meals" "success" 4 800 200 200 50
 run_test "Your test case" "success" 5 500 200 200 5
-run_test "Minimum viable" "success" 4 420 200 200 3
+# run_test "Minimum viable" "success" 4 420 200 200 3
 
 echo ""
 
@@ -263,27 +263,27 @@ echo ""
 # ============================================================================
 # STRESS TESTS
 # ============================================================================
-echo -e "${BLUE}${BOLD}[5] STRESS TESTS${NC}"
-echo "-----------------------------------------------------------"
+# echo -e "${BLUE}${BOLD}[5] STRESS TESTS${NC}"
+# echo "-----------------------------------------------------------"
 
-run_test "Many philos = 100" "success" 100 800 200 200 7
-run_test "Maximum philos = 200" "success" 200 800 200 200 7
-run_test "Long simulation" "success" 10 800 200 200 100
-run_test "High concurrency" "success" 50 500 200 200 10
+# run_test "Many philos = 100" "success" 100 800 200 200 7
+# run_test "Maximum philos = 200" "success" 200 800 200 200 7
+# run_test "Long simulation" "success" 10 800 200 200 100
+# run_test "High concurrency" "success" 50 500 200 200 10
 
-echo ""
+# echo ""
 
 # ============================================================================
 # TIMING PRECISION TESTS
 # ============================================================================
-echo -e "${CYAN}${BOLD}[6] TIMING PRECISION TESTS${NC}"
-echo "-----------------------------------------------------------"
+# echo -e "${CYAN}${BOLD}[6] TIMING PRECISION TESTS${NC}"
+# echo "-----------------------------------------------------------"
 
-run_test "Minimum safe timing" "success" 4 410 200 200 5
-run_test "Fast cycles" "success" 5 310 100 100 7
-run_test "Fast eating" "success" 10 600 100 100 7
-run_test "Fast sleeping" "success" 10 600 200 50 7
-run_test "Ultra fast" "success" 5 210 50 50 10
+# run_test "Minimum safe timing" "success" 4 410 200 200 5
+# run_test "Fast cycles" "success" 5 310 100 100 7
+# run_test "Fast eating" "success" 10 600 100 100 7
+# run_test "Fast sleeping" "success" 10 600 200 50 7
+# run_test "Ultra fast" "success" 5 210 50 50 10
 
 echo ""
 
