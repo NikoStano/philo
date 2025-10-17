@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 17:23:32 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 15:03:24 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/17 15:12:06 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +68,6 @@ void	print_status(t_philo *philo, char *status)
 	timestamp = get_current_time() - philo->data->start_time;
 	printf("%ld %d %s\n", timestamp, philo->id, status);
 	pthread_mutex_unlock(&philo->data->print_mutex);
-	// pthread_mutex_lock(&philo->data->stop_mutex);
-	// if (philo->data->simulation_stop)
-	// {
-	// 	pthread_mutex_unlock(&philo->data->stop_mutex);
-	// 	return ;
-	// }
-	// pthread_mutex_unlock(&philo->data->stop_mutex);
-	// pthread_mutex_lock(&philo->data->print_mutex);
-	// pthread_mutex_lock(&philo->data->stop_mutex);
-	// if (philo->data->simulation_stop)
-	// {
-	// 	pthread_mutex_unlock(&philo->data->stop_mutex);
-	// 	pthread_mutex_unlock(&philo->data->print_mutex);
-	// 	return ;
-	// }
-	// pthread_mutex_unlock(&philo->data->stop_mutex);
-	// timestamp = get_current_time() - philo->data->start_time;
-	// printf("%ld %d %s\n", timestamp, philo->id, status);
-	// pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
 static void	destroy_mutexes(t_simulation *sim)
