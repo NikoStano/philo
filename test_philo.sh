@@ -23,7 +23,7 @@ if [ ! -f "$PHILO" ]; then
     echo -e "${RED}Error: $PHILO not found. Please compile first with 'make'${NC}"
     exit 1
 fi
-
+timeout_duration
 # Function to check death timing (must be within 10ms of time_to_die)
 check_death_timing() {
     local log_file="$1"
@@ -115,6 +115,10 @@ run_test() {
     local timeout_duration=20
     if [ "${args_array[0]}" -gt 50 ] && [ ! -z "${args_array[4]}" ]; then
         timeout_duration=30  # More time for many philosophers with meals
+    fi
+
+    if [ ! -z "${args_array[4]}" ] && [ "${args_array[4]}" -gt 50 ]; then
+        timeout_duration=45  # Plus de temps pour beaucoup de meals
     fi
 
     timeout $timeout_duration $PHILO $args > /tmp/philo_test.log 2>&1

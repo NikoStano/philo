@@ -6,7 +6,7 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/17 11:12:54 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/10/17 13:19:40 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,6 +97,7 @@ norminette:
 	fi;
 
 test:
+	@$(MAKE) -s test 2>&1 | aha -b > result.html
 	@echo "$(YELLOW)╔════════════════════════════════════╗$(RESET)"
 	@echo "$(YELLOW)║      Launching test on philo       ║$(RESET)"
 	@echo "$(YELLOW)╚════════════════════════════════════╝$(RESET)"
