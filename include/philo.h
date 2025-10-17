@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:04:40 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 10:53:14 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/17 12:21:16 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,20 @@
 /**
  * @enum e_state
  * @brief Enumeration for philosopher states
- *
+ * @param THINKING Philosopher is thinking
+ * @param EATING Philosopher is eating
+ * @param SLEEPING Philosopher is sleeping
+ * @param DIED Philosopher has died
  * @details
  * Represents the different states a philosopher can be in during the simulation.
  * Each state corresponds to a specific action or condition.
  */
 typedef enum e_state
 {
-	THINKING,    /**< Philosopher is thinking */
-	EATING,      /**< Philosopher is eating */
-	SLEEPING,    /**< Philosopher is sleeping */
-	DIED         /**< Philosopher has died */
+	THINKING,
+	EATING,
+	SLEEPING,
+	DIED
 }	t_state;
 
 /* ************************************************************************** */
@@ -50,7 +53,17 @@ typedef enum e_state
 /**
  * @struct s_data
  * @brief Shared data structure for the simulation
- *
+ * @param[in] nb_philos Number of philosophers
+ * @param[in] time_to_die Time (ms) before a philosopher dies without eating
+ * @param[in] time_to_eat Time (ms) a philosopher spends eating
+ * @param[in] time_to_sleep Time (ms) a philosopher spends sleeping
+ * @param[in] must_eat_count Number of meals each philosopher must eat (optional)
+ * @param[in] start_time Timestamp when the simulation started
+ * @param[in,out] simulation_stop Flag indicating if the simulation should stop
+ * @param[in,out] all_ate Flag indicating if all philosophers have eaten enough
+ * @param[in,out] print_mutex Mutex for synchronizing print statements
+ * @param[in,out] stop_mutex Mutex for synchronizing access to simulation_stop
+ * @param[in,out] meal_mutex Mutex for synchronizing access to meal counts
  * @details
  * Contains all global parameters and synchronization primitives shared
  * between all philosopher threads. This structure is initialized once
@@ -58,23 +71,30 @@ typedef enum e_state
  */
 typedef struct s_data
 {
-	int				nb_philos;           /**< Number of philosophers */
-	long			time_to_die;         /**< Time to die in milliseconds */
-	long			time_to_eat;         /**< Time to eat in milliseconds */
-	long			time_to_sleep;       /**< Time to sleep in milliseconds */
-	int				must_eat_count;      /**< Required meals (-1 if unlimited) */
-	long			start_time;          /**< Simulation start timestamp */
-	int				simulation_stop;     /**< Flag: 1 if simulation should stop */
-	int				all_ate;             /**< Flag: 1 if all philos ate enough */
-	pthread_mutex_t	print_mutex;         /**< Mutex for printing messages */
-	pthread_mutex_t	stop_mutex;          /**< Mutex for simulation_stop access */
-	pthread_mutex_t	meal_mutex;          /**< Mutex for last_meal_time access */
+	int				nb_philos;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	int				must_eat_count;
+	long			start_time;
+	int				simulation_stop;
+	int				all_ate;
+	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	stop_mutex;
+	pthread_mutex_t	meal_mutex;
 }	t_data;
 
 /**
  * @struct s_philo
  * @brief Philosopher structure
- *
+ * @param[in] id Philosopher ID (1 to N)
+ * @param[in,out] meals_eaten Number of meals consumed by the philosopher
+ * @param[in,out] last_meal_time Timestamp of the last meal start
+ * @param[in,out] state Current state of the philosopher
+ * @param[in,out] thread Thread handle for the philosopher
+ * @param[in] left_fork Pointer to the left fork mutex
+ * @param[in] right_fork Pointer to the right fork mutex
+ * @param[in] data Pointer to the shared data structure
  * @details
  * Represents a single philosopher in the simulation. Each philosopher
  * runs in its own thread and maintains its own state, meal count,
@@ -82,30 +102,33 @@ typedef struct s_data
  */
 typedef struct s_philo
 {
-	int				id;                  /**< Philosopher ID (1 to N) */
-	int				meals_eaten;         /**< Number of meals consumed */
-	long			last_meal_time;      /**< Timestamp of last meal start */
-	t_state			state;               /**< Current philosopher state */
-	pthread_t		thread;              /**< Thread handle */
-	pthread_mutex_t	*left_fork;          /**< Pointer to left fork mutex */
-	pthread_mutex_t	*right_fork;         /**< Pointer to right fork mutex */
-	t_data			*data;               /**< Pointer to shared data */
+	int				id;
+	int				meals_eaten;
+	long			last_meal_time;
+	t_state			state;
+	pthread_t		thread;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	t_data			*data;
 }	t_philo;
 
 /**
  * @struct s_simulation
  * @brief Main simulation structure containing all components
- *
+ * @param[in,out] data Shared data structure for the simulation
+ * @param[in,out] philos Array of all philosophers
+ * @param[in,out] forks Array of fork mutexes
+ * @param[in,out] monitor_thread Thread handle for the monitor
  * @details
  * Top-level structure that encapsulates the entire simulation state.
  * Contains shared data, all philosophers, forks, and the monitor thread.
  */
 typedef struct s_simulation
 {
-	t_data			data;                        /**< Shared simulation data */
-	t_philo			philos[MAX_PHILOSOPHERS];    /**< Array of philosophers */
-	pthread_mutex_t	forks[MAX_PHILOSOPHERS];     /**< Array of fork mutexes */
-	pthread_t		monitor_thread;              /**< Monitor thread handle */
+	t_data			data;
+	t_philo			philos[MAX_PHILOSOPHERS];
+	pthread_mutex_t	forks[MAX_PHILOSOPHERS];
+	pthread_t		monitor_thread;
 }	t_simulation;
 
 /* ************************************************************************** */

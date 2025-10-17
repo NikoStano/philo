@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:06:20 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 10:58:43 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/17 12:23:05 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ static int	take_forks_small(t_philo *philo)
  * @param [in] philo Pointer to the philosopher
  * @details
  * Chooses the fork-taking strategy based on the number of philosophers.
- * Uses a specialized strategy for single philosopher, large groups, and small groups.
+ * Uses a specialized strategy for single philosopher, large groups,
+ * and small groups.
  * @return 0 on success, 1 if simulation should stop
  */
 int	take_forks(t_philo *philo)
