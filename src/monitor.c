@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:07:23 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 12:04:46 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/17 14:22:39 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@
 static int	get_check_interval(int nb_philos)
 {
 	if (nb_philos >= 100)
-		return (2000);
-	else if (nb_philos >= 50)
 		return (1000);
+	else if (nb_philos >= 50)
+		return (5000);
 	else
-		return (500);
+		return (100);
 }
 
 static void	initial_delay(int nb_philos)

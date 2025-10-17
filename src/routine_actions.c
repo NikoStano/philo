@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 18:08:34 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 13:36:28 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/17 14:18:32 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,10 @@ void	philo_think(t_philo *philo)
 		think_time = 0;
 	if (think_time > 600)
 		think_time = 600;
+	if (think_time > 1)
+		think_time = 1;
 	if (think_time > 0)
-		usleep(think_time);
+		precise_usleep(think_time * 1000);
 	}
 }
 
@@ -102,11 +104,11 @@ void	philo_loop(t_philo *philo)
 		if (should_stop(philo))
 			break ;
 		philo_think(philo);
-		if (should_stop(philo))
-			break ;
-		if (philo->data->nb_philos >= 100)
-			usleep(500);
-		else
-			usleep(100);
+		// if (should_stop(philo))
+		// 	break ;
+		// if (philo->data->nb_philos >= 100)
+		// 	usleep(500);
+		// else
+		// 	usleep(100);
 	}
 }
