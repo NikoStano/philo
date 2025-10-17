@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 18:31:56 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 11:03:04 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/17 13:32:33 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	philosopher_died(t_philo *philo)
 	current_time = get_current_time();
 	last_meal = philo->last_meal_time;
 	pthread_mutex_unlock(&philo->data->meal_mutex);
-	if (current_time - last_meal > philo->data->time_to_die)
+	if (current_time - last_meal >= philo->data->time_to_die)
 	{
 		announce_death(philo);
 		return (1);

@@ -8,42 +8,6 @@
 </head>
 <body style="color:white; background-color:black">
 <pre>
-<span style="color:yellow;">╔════════════════════════════════════╗</span>
-<span style="color:yellow;">║      Launching test on philo       ║</span>
-<span style="color:yellow;">╚════════════════════════════════════╝</span>
-<span style="color:aqua;">→ Launching norminette test :</span>
-<span style="color:aqua;">[ ℹ ] Running norminette </span><span style="font-weight:bold;color:aqua;">BY NISTANOJ...</span>
-init.c: Error!
-Error: TAB_INSTEAD_SPC      (line:  68, col:   1):	<span style="filter: contrast(70%) brightness(190%);color:#3333FF;">Found tab when expecting space</span>
-Error: SPC_BFR_OPERATOR     (line:  68, col:   9):	<span style="filter: contrast(70%) brightness(190%);color:#3333FF;">missing space before operator</span>
-routine_actions.c: Error!
-Error: TOO_MANY_TAB         (line:  78, col:   1):	Extra tabs for indent level
-Error: TOO_MANY_TAB         (line:  78, col:   1):	Extra tabs for indent level
-routine_loop.c: Error!
-Error: LINE_TOO_LONG        (line:  50, col:  13):	<span style="filter: contrast(70%) brightness(190%);color:#3333FF;">line too long</span>
-Error: WRONG_SCOPE_COMMENT  (line:  50, col:  13):	<span style="filter: contrast(70%) brightness(190%);color:fuchsia;">Comment is invalid in this scope</span>
-monitor_check.c: Error!
-Error: LINE_TOO_LONG        (line:  86, col:   1):	<span style="filter: contrast(70%) brightness(190%);color:#3333FF;">line too long</span>
-<span style="color:red;">[ ✗ ] Norminette found errors !</span>
-<span style="color:lime;">✓ philo_tester cloned successfully!</span>
-<span style="color:aqua;">→ Recompiling philosophers for tests...</span>
-<span style="color:red;">[🧹 ] Cleaning object files...</span>
-<span style="color:red;">[🧹 ] Cleaning executable...</span>
-<span style="color:yellow;">[ ℹ ] Compiling </span><span style="font-weight:bold;color:yellow;">src/init.c...</span>
-<span style="color:yellow;">[ ℹ ] Compiling </span><span style="font-weight:bold;color:yellow;">src/parse.c...</span>
-<span style="color:yellow;">[ ℹ ] Compiling </span><span style="font-weight:bold;color:yellow;">src/main.c...</span>
-<span style="color:yellow;">[ ℹ ] Compiling </span><span style="font-weight:bold;color:yellow;">src/thread.c...</span>
-<span style="color:yellow;">[ ℹ ] Compiling </span><span style="font-weight:bold;color:yellow;">src/monitor.c...</span>
-<span style="color:yellow;">[ ℹ ] Compiling </span><span style="font-weight:bold;color:yellow;">src/monitor_check.c...</span>
-<span style="color:yellow;">[ ℹ ] Compiling </span><span style="font-weight:bold;color:yellow;">src/routine.c...</span>
-<span style="color:yellow;">[ ℹ ] Compiling </span><span style="font-weight:bold;color:yellow;">src/routine_loop.c...</span>
-<span style="color:yellow;">[ ℹ ] Compiling </span><span style="font-weight:bold;color:yellow;">src/routine_actions.c...</span>
-<span style="color:yellow;">[ ℹ ] Compiling </span><span style="font-weight:bold;color:yellow;">src/time.c...</span>
-<span style="color:yellow;">[ ℹ ] Compiling </span><span style="font-weight:bold;color:yellow;">src/utils.c...</span>
-<span style="color:aqua;">[ → ] Linking </span><span style="font-weight:bold;color:aqua;">philo...</span>
-<span style="color:lime;">[ ✓ ] </span><span style="font-weight:bold;color:lime;">philo compiled successfully!</span>
-<span style="color:aqua;">→ Running all tests...</span>
-./test_philo.sh: line 26: timeout_duration: command not found
 <span style="font-weight:bold;"></span><span style="color:aqua;">
 ╔════════════════════════════════════════════════════════╗
 ║                                                        ║
@@ -65,15 +29,11 @@ Error: LINE_TOO_LONG        (line:  86, col:   1):	<span style="filter: contrast
 <span style="color:red;"></span><span style="font-weight:bold;color:red;">[2] DEATH DETECTION TESTS</span>
 -----------------------------------------------------------
 <span style="font-weight:bold;color:yellow;">Test 9: Single philosopher dies</span> <span style="color:lime;">✓ PASSED</span>
-<span style="font-weight:bold;color:yellow;">Test 10: Two philos die quickly</span> <span style="color:red;">✗ FAILED</span>
-<span style="color:red;">   Command: ./philo 2 200 100 50</span>
-<span style="color:red;">   No death detected</span>
+<span style="font-weight:bold;color:yellow;">Test 10: Two philos die quickly</span> <span style="color:lime;">✓ PASSED</span>
 <span style="font-weight:bold;color:yellow;">Test 11: Death with 4 philos</span> <span style="color:lime;">✓ PASSED</span>
 <span style="font-weight:bold;color:yellow;">Test 12: Very quick death</span> <span style="color:lime;">✓ PASSED</span>
 <span style="font-weight:bold;color:yellow;">Test 13: Instant death</span> <span style="color:lime;">✓ PASSED</span>
-<span style="font-weight:bold;color:yellow;">Test 14: Death timing 10ms tolerance</span> <span style="color:red;">✗ FAILED</span>
-<span style="color:red;">   Command: ./philo 4 400 200 100</span>
-<span style="color:red;">   No death detected</span>
+<span style="font-weight:bold;color:yellow;">Test 14: Death timing 10ms tolerance</span> <span style="color:lime;">✓ PASSED</span>
 
 <span style="color:lime;"></span><span style="font-weight:bold;color:lime;">[3] NO DEATH TESTS (with meal limit)</span>
 -----------------------------------------------------------
@@ -118,10 +78,10 @@ Error: LINE_TOO_LONG        (line:  86, col:   1):	<span style="filter: contrast
 ╚════════════════════════════════════════════════════════╝
 </span>
 Total tests:  <span style="font-weight:bold;">31</span>
-Passed:       <span style="color:lime;"></span><span style="font-weight:bold;color:lime;">25</span>
-Failed:       <span style="color:red;"></span><span style="font-weight:bold;color:red;">6</span>
+Passed:       <span style="color:lime;"></span><span style="font-weight:bold;color:lime;">27</span>
+Failed:       <span style="color:red;"></span><span style="font-weight:bold;color:red;">4</span>
 
-Success rate: <span style="font-weight:bold;">80%</span>
+Success rate: <span style="font-weight:bold;">87%</span>
 
 <span style="color:red;"></span><span style="font-weight:bold;color:red;">╔════════════════════════════════════════════════════════╗</span>
 <span style="color:red;"></span><span style="font-weight:bold;color:red;">║                                                        ║</span>
@@ -129,10 +89,6 @@ Success rate: <span style="font-weight:bold;">80%</span>
 <span style="color:red;"></span><span style="font-weight:bold;color:red;">║                                                        ║</span>
 <span style="color:red;"></span><span style="font-weight:bold;color:red;">╚════════════════════════════════════════════════════════╝</span>
 <span style="font-weight:bold;color:yellow;">Check /tmp/philo_test.log for last test details.</span>
-<span style="color:aqua;">✓ All tests ran! Cleaning up...</span>
-<span style="color:red;">[🧹 ] Cleaning object files...</span>
-<span style="color:red;">[🧹 ] Cleaning executable...</span>
-<span style="font-weight:bold;color:lime;">✓ All tests completed</span>
 </pre>
 </body>
 </html>

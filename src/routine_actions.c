@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 18:08:34 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 12:45:12 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/17 13:36:28 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,20 +69,17 @@ void	philo_think(t_philo *philo)
 	long	think_time;
 
 	print_status(philo, "is thinking");
-	if (philo->data->nb_philos >= 100)
+	if (philo->data->nb_philos % 2 != 0)
 	{
-		usleep(100);
-		return ;
-	}
-	think_time = philo->data->time_to_die - philo->data->time_to_eat
-			- philo->data->time_to_sleep;
-	think_time = think_time / 2;
+		think_time = (philo->data->time_to_eat * 2)	- \
+		philo->data->time_to_sleep;
 	if (think_time < 0)
 		think_time = 0;
-	else if (think_time > 1)
-		think_time = 1;
+	if (think_time > 600)
+		think_time = 600;
 	if (think_time > 0)
-		precise_usleep(think_time * 1000);
+		usleep(think_time);
+	}
 }
 
 /**
