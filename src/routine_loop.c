@@ -6,12 +6,20 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 17:47:24 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 00:48:34 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/17 10:59:46 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
+/**
+ * @brief Take forks for philosophers in small groups (<100)
+ * @param [in] philo Pointer to the philosopher
+ * @details
+ * Odd ID philosophers pick up left fork first, even ID pick up right fork first.
+ * This alternating strategy helps reduce contention and potential deadlocks.
+ * @return 0 on success, 1 if simulation should stop
+ */
 static void	init_philosopher_time(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->data->meal_mutex);
@@ -19,6 +27,13 @@ static void	init_philosopher_time(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->meal_mutex);
 }
 
+/**
+ * @brief Initial delay for philosophers to reduce contention
+ * @param [in] philo Pointer to the philosopher
+ * @details
+ * Introduces a staggered start for philosophers based on their ID and total count.
+ * Helps to minimize simultaneous fork requests at the beginning of the simulation.
+ */
 static void	philo_initial_delay(t_philo *philo)
 {
 	long	delay;

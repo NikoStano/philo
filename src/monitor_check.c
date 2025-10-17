@@ -6,12 +6,18 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 18:31:56 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/07 18:38:15 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/17 11:03:04 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
+/**
+ * @brief Announce the death of a philosopher
+ * @param [in] philo Pointer to the philosopher
+ * @details
+ * Sets the simulation_stop flag and prints the death message with timestamp.
+ */
 static void	announce_death(t_philo *philo)
 {
 	long	current_time;
@@ -25,6 +31,11 @@ static void	announce_death(t_philo *philo)
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
+/**
+ * @brief Check if a philosopher has died
+ * @param [in] philo Pointer to the philosopher
+ * @return 1 if the philosopher has died, 0 otherwise
+ */
 static int	philosopher_died(t_philo *philo)
 {
 	long	current_time;
@@ -42,6 +53,15 @@ static int	philosopher_died(t_philo *philo)
 	return (0);
 }
 
+/**
+ * @brief Check if any philosopher has died
+ * @param [in] sim Pointer to the simulation
+ * @return 1 if a philosopher has died, 0 otherwise
+ * @details
+ * Iterates through all philosophers and checks if the time since their last meal
+ * exceeds the time_to_die threshold. If a philosopher is found to have died,
+ * it sets the simulation_stop flag and prints the death status.
+ */
 int	check_death(t_simulation *sim)
 {
 	int	i;
@@ -56,6 +76,15 @@ int	check_death(t_simulation *sim)
 	return (0);
 }
 
+/**
+ * @brief Check if all philosophers have eaten the required number of meals
+ * @param [in] sim Pointer to the simulation
+ * @return 1 if all philosophers have eaten enough, 0 otherwise
+ * @details
+ * If must_eat_count is -1, this check is skipped.
+ * Iterates through all philosophers and counts how many have eaten
+ * at least must_eat_count meals. If all have, sets simulation_stop and all_ate flags.
+ */
 int	check_all_ate(t_simulation *sim)
 {
 	int	i;

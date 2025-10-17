@@ -6,11 +6,11 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 17:23:32 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/07 17:23:33 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/17 10:57:19 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
 int	ft_atoi(const char *str)
 {
@@ -43,6 +43,17 @@ int	is_number(const char *str)
 	return (1);
 }
 
+/**
+ * @brief Print status
+ * @param [in] philo Pointer to the philosopher
+ * @param [in] status Status message to print
+ * @details
+ * Prints the status of the philosopher with a timestamp.
+ * Ensures thread-safe printing using mutexes.
+ * Does not print if the simulation has stopped.
+ * Format: "[timestamp_ms] philosopher_id status"
+ * Example: "1234 2 is eating"
+ */
 void	print_status(t_philo *philo, char *status)
 {
 	long	timestamp;

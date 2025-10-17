@@ -6,18 +6,17 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/16 23:41:45 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/10/17 11:12:54 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	philo
 
 CC			=	cc
-# CFLAGS		=	-Wall -Wextra -Werror -pthread
 CFLAGS		=	-Wall -Wextra -Werror -pthread
-# CFLAGS_D	=	-g -fsanitize=thread
+CFLAGS_D	=	-g -fsanitize=thread
 
-INCLUDE		=	inc
+INCLUDE		=	include
 DIR_SRCS	=	src/
 DIR_OBJS	=	obj/
 
@@ -120,3 +119,42 @@ test:
 	@exit 0
 
 .PHONY: all clean fclean re norminette test
+
+# ============================================================================ #
+#                                   NOTES                                      #
+# ============================================================================ #
+
+# Build system notes:
+# - Use 'make' or 'make all' for normal compilation
+# - Use 'make clean' to remove object files
+# - Use 'make fclean' to remove object files and the executable
+# - Use 'make re' to recompile everything from scratch
+# - Use 'make norminette' to check code style with norminette
+# - Use 'make test' to run the test suite (requires internet connection for cloning tester)
+# - This Makefile supports dependency tracking with -MMD and -MP flags
+# - Colored output is used for better readability of build messages
+#
+# Test suite notes:
+# - The test suite clones a separate repository for testing
+# - It recompiles the project before running tests
+# - Cleans up after tests by removing the executable and test script
+# - Ensure you have internet access when running 'make test'
+# - The test script is designed to handle failures gracefully
+# - Modify the test_philo.sh script as needed for additional tests
+# - The test suite provides feedback on the success or failure of tests
+# - Use 'make fclean' after testing to ensure a clean state
+# - Ensure you have the necessary permissions to execute scripts
+# - The test suite is intended for development and debugging purposes
+# - Always review test results to identify potential issues
+#
+# Troubleshooting:
+# - If norminette is not found, ensure it is installed and accessible in your PATH
+# - If compilation fails, check for syntax errors or missing files
+# - For dependency issues, ensure all source files are correctly referenced
+# - If tests fail, review the test_philo.sh script for potential issues
+# - Consult the documentation for additional help on using the Makefile
+# - Reach out to the community or forums for assistance with specific errors
+# - Keep your development environment updated to avoid compatibility issues
+#
+# Author > NISTANOJ
+# --------------------------------------------------------------------------- #

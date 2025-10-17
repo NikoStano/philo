@@ -6,12 +6,21 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:05:26 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/07 18:35:00 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/17 11:04:02 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
+/**
+ * @brief Join all philosopher threads
+ * @param [in] sim Pointer to the simulation
+ * @return 0 on success, 1 on failure
+ * @details
+ * Waits for all philosopher threads to finish execution.
+ * If joining any thread fails, an error message is printed.
+ * Cleans up resources should be handled by the caller.
+ */
 static int	join_philosophers(t_simulation *sim)
 {
 	int	i;
@@ -29,6 +38,15 @@ static int	join_philosophers(t_simulation *sim)
 	return (0);
 }
 
+/**
+ * @brief Start the simulation
+ * @param [in] sim Pointer to the simulation structure
+ * @return 0 on success, 1 on failure
+ * @details
+ * Initializes the start time, creates philosopher threads,
+ * starts the monitor thread, and waits for all threads to finish.
+ * Cleans up resources on failure.
+ */
 static int	start_simulation(t_simulation *sim)
 {
 	sim->data.start_time = get_current_time();

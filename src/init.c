@@ -6,12 +6,21 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:05:46 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/07 20:04:59 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/17 11:05:16 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
+/**
+ * @brief Initialize mutexes for the simulation
+ * @param [in] sim Pointer to the simulation
+ * @return 0 on success, 1 on failure
+ * @details
+ * Initializes mutexes for printing, stopping the simulation,
+ * meal time access, and each fork.
+ * If any mutex initialization fails, returns 1.
+ */
 static int	init_mutexes(t_simulation *sim)
 {
 	int	i;
@@ -32,6 +41,13 @@ static int	init_mutexes(t_simulation *sim)
 	return (0);
 }
 
+/**
+ * @brief Initialize philosophers in the simulation
+ * @param [in] sim Pointer to the simulation
+ * @details
+ * Sets up each philosopher's ID, meal count, last meal time,
+ * state, data pointer, and fork pointers.
+ */
 static void	init_philosophers(t_simulation *sim)
 {
 	int	i;
@@ -54,6 +70,15 @@ static void	init_philosophers(t_simulation *sim)
 	}
 }
 
+/**
+ * @brief Initialize the simulation structure
+ * @param [in] sim Pointer to the simulation
+ * @param [in] argv Argument vector
+ * @return 0 on success, 1 on failure
+ * @details
+ * Parses command-line arguments to set simulation parameters,
+ * initializes mutexes and philosophers.
+ */
 int	init_simulation(t_simulation *sim, char **argv)
 {
 	memset(sim, 0, sizeof(t_simulation));
