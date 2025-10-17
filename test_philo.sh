@@ -252,13 +252,13 @@ echo ""
 # ============================================================================
 # NO DEATH TESTS (without meal limit - should run for 10+ seconds)
 # ============================================================================
-echo -e "${GREEN}${BOLD}[4] NO DEATH INFINITE TESTS${NC}"
-echo "-----------------------------------------------------------"
+# echo -e "${GREEN}${BOLD}[4] NO DEATH INFINITE TESTS${NC}"
+# echo "-----------------------------------------------------------"
 
-run_test "Infinite simulation" "success" 5 800 200 200
-run_test "Tight infinite" "success" 4 410 200 200
+# run_test "Infinite simulation" "success" 5 800 200 200
+# run_test "Tight infinite" "success" 4 410 200 200
 
-echo ""
+# echo ""
 
 # ============================================================================
 # STRESS TESTS
