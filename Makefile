@@ -6,7 +6,7 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/17 13:54:26 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/10/17 14:31:56 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -112,6 +112,7 @@ test:
 	@$(MAKE) -s re
 	@echo "$(CYAN)→ Running all tests...$(RESET)"
 	@./test_philo.sh | aha -b > results.html || true
+#	@./test_philo.sh || true
 	@echo "$(CYAN)✓ All tests ran! Cleaning up...$(RESET)"
 	@$(MAKE) fclean
 #	@rm -f test_philo.sh

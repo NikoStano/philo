@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 18:08:34 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 14:18:32 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/17 14:27:58 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ void	philo_think(t_philo *philo)
 		philo->data->time_to_sleep;
 	if (think_time < 0)
 		think_time = 0;
-	if (think_time > 600)
-		think_time = 600;
+	// if (think_time > 600)
+	// 	think_time = 600;
 	if (think_time > 1)
 		think_time = 1;
 	if (think_time > 0)
