@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 18:08:34 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 15:11:10 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/17 15:16:17 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,22 +67,18 @@ void	philo_sleep(t_philo *philo)
 void	philo_think(t_philo *philo)
 {
 	long	think_time;
+	long	safety_limit;
 
 	print_status(philo, "is thinking");
 	if (philo->data->nb_philos % 2 != 0 && philo->data->nb_philos > 1)
 	{
-		// Formule sécurisée : utilise la moitié du temps de manger
-		// Cela désynchronise suffisamment sans risquer la mort
 		think_time = philo->data->time_to_eat / 2;
-		// Limite supérieure conservatrice pour éviter la mort
-		if (think_time > (philo->data->time_to_die - philo->data->time_to_eat \
-			- philo->data->time_to_sleep) / 2)
-			think_time = (philo->data->time_to_die - philo->data->time_to_eat \
+		safety_limit = (philo->data->time_to_die - philo->data->time_to_eat
 				- philo->data->time_to_sleep) / 2;
-		// Limite pratique max 100ms pour éviter ralentissements
+		if (think_time > safety_limit)
+			think_time = safety_limit;
 		if (think_time > 100)
 			think_time = 100;
-		// Minimum 1ms
 		if (think_time < 1)
 			think_time = 1;
 		if (think_time > 0)
