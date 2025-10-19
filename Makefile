@@ -6,7 +6,7 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/19 22:03:19 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/10/19 23:26:23 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ SRCS		=	$(DIR_SRCS)init.c \
 OBJS 		=	$(SRCS:$(DIR_SRCS)%.c=$(DIR_OBJS)%.o)
 DEPS 		=	$(OBJS:.o=.d)
 
-# Colors
 RED			=	\033[0;31m
 GREEN		=	\033[0;32m
 L_GREEN		=	\033[1;32m
@@ -67,7 +66,7 @@ clean:
 fclean: clean
 	@echo "$(RED)[🧹 ] Cleaning executable...$(RESET)"
 	@rm -f $(NAME)
-	@rm -rf logs
+	@rm -rf logs/
 
 re: fclean all
 
@@ -120,30 +119,8 @@ test:
 # 	@./test_philo.sh | aha -b > results.html || true
 	@./test_philo.sh || true
 	@echo "$(CYAN)[ ℹ ] All tests ran! Cleaning up...$(RESET)"
-#	@rm -f test_philo.sh
+	@rm -f test_philo.sh
 	@echo "$(L_GREEN)[ ✓ ] All tests completed$(RESET)"
 	@exit 0
 
 .PHONY: all clean fclean re norminette test
-
-# ============================================================================ #
-#                                   NOTES                                      #
-# ============================================================================ #
-
-# Build system notes:
-# - Use 'make' for normal compilation
-# - Use 'make clean' to remove object files
-# - Use 'make fclean' to remove object files and the executable and logs
-# - Use 'make re' to recompile everything from scratch
-# - Use 'make norminette' to check code style with norminette
-# - Use 'make test' to run the test suite (requires internet connection for cloning tester)
-# - This Makefile supports dependency tracking with -MMD and -MP flags
-#
-# Test suite notes:
-# - The test suite clones a separate repository for testing if not already present
-# - Tests cover various scenarios including edge cases
-# - Test results are displayed in the terminal
-# - Ensure internet connection is available for the first run to clone the tester
-#
-# - Author > nistanoj
-# --------------------------------------------------------------------------- #
