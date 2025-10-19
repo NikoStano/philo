@@ -1,0 +1,17 @@
+# Fichiers et dossiers générés (compilation, objets, logs, etc.)
+# Binaries
+philo
+philo_bonus
+*.out
+*.a
+
+# Dossiers et objets de compilation
+obj/
+*.o
+*.d
+
+# Logs et fichiers temporaires
+logs/
+*.log
+*.tmp
+*.swp

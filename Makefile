@@ -6,7 +6,7 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/17 16:51:22 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/10/19 22:03:19 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ clean:
 fclean: clean
 	@echo "$(RED)[🧹 ] Cleaning executable...$(RESET)"
 	@rm -f $(NAME)
+	@rm -rf logs
 
 re: fclean all
 
@@ -88,9 +89,10 @@ norminette:
 		echo "$(YELLOW)[ ℹ ] Checking target(s): $(BOLD)$$TARGET$(RESET)"; \
 	fi; \
 	OUTPUT=$$($$NORM_CMD $$TARGET 2>&1) ; \
+	OUTPUT=$$(echo "$$OUTPUT" | sed '/Setting locale/d'); \
 	FILTERED=$$(echo "$$OUTPUT" | grep -v ": OK!"); \
-	if [ -n "$$FILTERED" ]; then \
-		$$NORM_CMD $$TARGET | grep -v ": OK!"; \
+	if [ -n "$${FILTERED}" ]; then \
+		echo "$$OUTPUT" | grep -v ": OK!"; \
 		echo "$(RED)[ ✗ ] Norminette found errors !$(RESET)"; \
 	else \
 		echo "$(GREEN)[ ✓ ] Norminette $(BOLD)passed !$(RESET)"; \
@@ -102,20 +104,24 @@ test:
 	@echo "$(YELLOW)╚════════════════════════════════════╝$(RESET)"
 	@echo "$(CYAN)→ Launching norminette test :$(RESET)"
 	@$(MAKE) -s norminette
-#	@echo "$(CYAN)→ Cloning philo_tester...$(RESET)"
-#	@git clone -q https://github.com/NikoStano/philo_tester.git
-#	@cat philo_tester/test_philo.sh > test_philo.sh
-#	@chmod +x test_philo.sh
-#	@rm -rf philo_tester
-	@echo "$(GREEN)✓ philo_tester cloned successfully!$(RESET)"
-	@echo "$(CYAN)→ Recompiling philosophers for tests...$(RESET)"
+	@TESTER="./test_philo.sh"; \
+	if [ ! -f "$$TESTER" ]; then \
+		echo "$(CYAN)[ ℹ ] Cloning philo_tester...$(RESET)"; \
+		git clone -q https://github.com/NikoStano/philo_tester.git; \
+		cat philo_tester/test_philo.sh > test_philo.sh; \
+		chmod +x test_philo.sh; \
+		rm -rf philo_tester; \
+		echo "$(GREEN)[ ✓ ] philo_tester cloned successfully!$(RESET)"; \
+	fi
+	@echo "$(CYAN)[ → ] Recompiling philosophers for tests...$(RESET)"
 	@$(MAKE) -s re
-	@echo "$(CYAN)→ Running all tests...$(RESET)"
+	@echo "$(CYAN)[ → ] Running all tests...$(RESET)"
+#	To print results in html colored file
 # 	@./test_philo.sh | aha -b > results.html || true
 	@./test_philo.sh || true
-	@echo "$(CYAN)✓ All tests ran! Cleaning up...$(RESET)"
+	@echo "$(CYAN)[ ℹ ] All tests ran! Cleaning up...$(RESET)"
 #	@rm -f test_philo.sh
-	@echo "$(L_GREEN)✓ All tests completed$(RESET)"
+	@echo "$(L_GREEN)[ ✓ ] All tests completed$(RESET)"
 	@exit 0
 
 .PHONY: all clean fclean re norminette test
@@ -125,36 +131,19 @@ test:
 # ============================================================================ #
 
 # Build system notes:
-# - Use 'make' or 'make all' for normal compilation
+# - Use 'make' for normal compilation
 # - Use 'make clean' to remove object files
-# - Use 'make fclean' to remove object files and the executable
+# - Use 'make fclean' to remove object files and the executable and logs
 # - Use 'make re' to recompile everything from scratch
 # - Use 'make norminette' to check code style with norminette
 # - Use 'make test' to run the test suite (requires internet connection for cloning tester)
 # - This Makefile supports dependency tracking with -MMD and -MP flags
-# - Colored output is used for better readability of build messages
 #
 # Test suite notes:
-# - The test suite clones a separate repository for testing
-# - It recompiles the project before running tests
-# - Cleans up after tests by removing the executable and test script
-# - Ensure you have internet access when running 'make test'
-# - The test script is designed to handle failures gracefully
-# - Modify the test_philo.sh script as needed for additional tests
-# - The test suite provides feedback on the success or failure of tests
-# - Use 'make fclean' after testing to ensure a clean state
-# - Ensure you have the necessary permissions to execute scripts
-# - The test suite is intended for development and debugging purposes
-# - Always review test results to identify potential issues
+# - The test suite clones a separate repository for testing if not already present
+# - Tests cover various scenarios including edge cases
+# - Test results are displayed in the terminal
+# - Ensure internet connection is available for the first run to clone the tester
 #
-# Troubleshooting:
-# - If norminette is not found, ensure it is installed and accessible in your PATH
-# - If compilation fails, check for syntax errors or missing files
-# - For dependency issues, ensure all source files are correctly referenced
-# - If tests fail, review the test_philo.sh script for potential issues
-# - Consult the documentation for additional help on using the Makefile
-# - Reach out to the community or forums for assistance with specific errors
-# - Keep your development environment updated to avoid compatibility issues
-#
-# Author > NISTANOJ
+# - Author > nistanoj
 # --------------------------------------------------------------------------- #

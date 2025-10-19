@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 18:08:34 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 16:42:16 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/19 20:26:00 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,36 +71,17 @@ void	philo_think(t_philo *philo)
 	print_status(philo, "is thinking");
 	if (philo->data->nb_philos % 2 != 0 && philo->data->nb_philos > 1)
 	{
-		think_time = (philo->data->time_to_eat * 2)\
-			- philo->data->time_to_sleep;
-		if (think_time > philo->data->time_to_die / 3)
-			think_time = philo->data->time_to_die / 3;
-		if (think_time < 1)
-			think_time = 1;
-		if (think_time > 200)
-			think_time = 200;
-		if (think_time > 0)
-			precise_usleep(think_time * 1000);
+		think_time = \
+philo->data->time_to_die - philo->data->time_to_eat - \
+philo->data->time_to_sleep;
+		think_time = (think_time / 2) - 10;
+		if (think_time > 20)
+			think_time = 20;
+		if (think_time < 0)
+			think_time = 0;
+		precise_usleep(think_time * 1000);
 	}
 }
-
-// void	philo_think(t_philo *philo)
-// {
-// 	long	think_time;
-
-// 	print_status(philo, "is thinking");
-// 	if (philo->data->nb_philos % 2 != 0 && philo->data->nb_philos > 1)
-// 	{
-// 		think_time = (philo->data->time_to_eat * 2)	- \
-// 		philo->data->time_to_sleep;
-// 		if (think_time > philo->data->time_to_die / 3)
-// 			think_time = philo->data->time_to_die / 3;
-// 		if (think_time < 0)
-// 			think_time = 1;
-// 		if (think_time > 0)
-// 			precise_usleep(think_time * 1000);
-// 	}
-// }
 
 /**
  * @brief Main loop for philosopher actions
@@ -122,11 +103,7 @@ void	philo_loop(t_philo *philo)
 		if (should_stop(philo))
 			break ;
 		philo_think(philo);
-		// if (should_stop(philo))
-		// 	break ;
-		// if (philo->data->nb_philos >= 100)
-		// 	usleep(500);
-		// else
-		// 	usleep(100);
+		if (should_stop(philo))
+			break ;
 	}
 }

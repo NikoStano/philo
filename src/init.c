@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:05:46 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 11:05:16 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/19 18:47:13 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ static void	init_philosophers(t_simulation *sim)
 		if (sim->data.nb_philos == 1)
 			sim->philos[i].right_fork = &sim->forks[i];
 		else
-			sim->philos[i].right_fork\
-		= &sim->forks[(i + 1) % sim->data.nb_philos];
+			sim->philos[i].right_fork = \
+&sim->forks[(i + 1) % sim->data.nb_philos];
 		i++;
 	}
 }

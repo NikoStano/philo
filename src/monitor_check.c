@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 18:31:56 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 13:32:33 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/19 18:44:35 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ int	check_death(t_simulation *sim)
  * @details
  * If must_eat_count is -1, this check is skipped.
  * Iterates through all philosophers and counts how many have eaten
- * at least must_eat_count meals. If all have, sets simulation_stop and all_ate flags.
+ * at least must_eat_count meals. If all have, sets simulation_stop
+ * and all_ate flags.
  */
 int	check_all_ate(t_simulation *sim)
 {
