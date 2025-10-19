@@ -1,52 +1,124 @@
-# Philo
+# 🍝 Dining Philosophers
 
----
-# Dining Philosophers Simulation
-**This project simulates the classic Dining Philosophers problem using multithreading in C. It demonstrates the use of mutexes to manage concurrent access to shared resources (forks) and ensures that philosophers can eat without causing deadlocks or starvation.**
+Une implémentation en C du célèbre problème des philosophes dîneurs, utilisant le multithreading et les mutex pour illustrer les concepts de synchronisation et de gestion des ressources partagées.
 
----
+## 📋 Table des matières
 
-## Features
-- Simulates multiple philosophers who alternate between thinking and eating.
-- Uses mutexes to control access to forks.
-- Configurable parameters for the number of philosophers, time to die, time to eat, time to sleep, and optional number of meals.
-- Graceful handling of philosopher death and termination of the simulation.
+- [À propos](#à-propos)
+- [Le problème](#le-problème)
+- [Installation](#installation)
+- [Utilisation](#utilisation)
+- [Tests](#tests)
+- [Algorithme](#algorithme)
+- [Structure du projet](#structure-du-projet)
 
----
+## 📖 À propos
 
-## Compilation
-To compile the project, use the provided Makefile. Simply run:
-```make
-```
-This will generate an executable named `philo`.
+Ce projet implémente une solution au problème classique des philosophes dîneurs d'Edsger Dijkstra. Il démontre la gestion de la concurrence, la prévention des deadlocks et la synchronisation entre threads en C.
 
----
+## 🤔 Le problème
 
-## Usage
-Run the program with the following command:
+Des philosophes sont assis autour d'une table ronde avec un plat de spaghetti. Entre chaque paire de philosophes se trouve une fourchette. Pour manger, un philosophe doit prendre les deux fourchettes adjacentes (gauche et droite). Le défi consiste à concevoir un algorithme qui :
+- Évite les interblocages (deadlocks)
+- Prévient la famine (starvation)
+- Maximise le parallélisme
+
+## 📦 Installation
+
 ```bash
-./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_meals]
+# Cloner le dépôt
+git clone https://github.com/NikoStano/philo.git
+cd philo
+
+# Compiler le projet
+make
+
+# (Optionnel) Compiler avec flags de débogage
+make debug
 ```
-- `number_of_philosophers`: The total number of philosophers (and forks).
-- `time_to_die`: Time (in milliseconds) a philosopher can go without eating before dying.
-- `time_to_eat`: Time (in milliseconds) a philosopher takes to eat.
-- `time_to_sleep`: Time (in milliseconds) a philosopher spends sleeping.
-- `number_of_meals` (optional): Number of times each philosopher must eat before the simulation ends.
 
----
+## 🚀 Utilisation
 
-## Example
+### Syntaxe
+
 ```bash
-./philo 5 800 200 200 7
+./philo <nb_philosophes> <temps_mort> <temps_manger> <temps_dormir> [nb_repas]
 ```
-This command starts a simulation with 5 philosophers, where each philosopher dies if they don't eat within 800ms, takes 200ms to eat, sleeps for 200ms, and must eat 7 times.
 
+### Paramètres
+
+| Paramètre | Type | Description | Unité |
+|-----------|------|-------------|-------|
+| `nb_philosophes` | int | Nombre de philosophes (et de fourchettes) | - |
+| `temps_mort` | int | Temps maximum sans manger avant de mourir | ms |
+| `temps_manger` | int | Durée d'un repas | ms |
+| `temps_dormir` | int | Durée du sommeil après manger | ms |
+| `nb_repas` | int | Nombre de repas requis (optionnel) | - |
+
+### Format de sortie
+
+```
+[timestamp_ms] philosophe_X action
+```
+
+Actions possibles :
+- `has taken a fork` - a pris une fourchette
+- `is eating` - est en train de manger
+- `is sleeping` - dort
+- `is thinking` - réfléchit
+- `died` - est mort
+
+## 🧪 Tests
+
+Lancer la suite de tests complète :
+
+```bash
+make test
+```
+
+Cette commande exécute plusieurs scénarios de test pour valider :
+- La détection correcte de la mort
+- L'absence de data races
+- Le respect des contraintes de temps
+- La terminaison propre du programme
+
+## 🧮 Algorithme
+
+### Principe de base
+
+1. **Initialisation** : Création des threads (philosophes) et des mutex (fourchettes)
+2. **Boucle principale** :
+   - Prendre la fourchette de gauche
+   - Prendre la fourchette de droite
+   - Manger (durée : `temps_manger`)
+   - Déposer les fourchettes
+   - Dormir (durée : `temps_dormir`)
+   - Penser
+3. **Surveillance** : Thread séparé vérifiant si un philosophe est mort
+4. **Terminaison** : Arrêt propre quand condition remplie ou philosophe mort
+
+### Prévention du deadlock
+
+L'implémentation utilise différentes stratégies possibles :
+- Ordre d'acquisition des fourchettes
+- Temporisation
+- Limitation du nombre de philosophes mangeant simultanément
+
+## 📁 Structure du projet
+
+```
+philo/
+├── Makefile              # Compilation et tests
+├── README.md             # Ce fichier
+├── includes/
+│   └── philo.h          # Déclarations et structures
+└── srcs/
+    ├── main.c           # Point d'entrée
+    ├── init.c           # Initialisation
+    ├── routine.c        # Routine des philosophes
+    ├── monitor.c        # Surveillance
+    └── utils.c          # Fonctions utilitaires
+```
 ---
 
-## Statistics project :
-
-|  Directory  |  Lines of Code  | Comments | Blank Lines |
-|-------------|-----------------|----------|-------------|
-| srcs/       |             345 |      102 |          45 |
-| include/    |              50 |       20 |          10 |
-| **Total**   |         **395** |   **122**|      **55** |
+*Bon appétit aux philosophes ! 🍝*
