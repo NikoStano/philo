@@ -6,7 +6,7 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/22 18:07:29 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/10/22 18:59:42 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ MONI_SRC	=	monitor_check.c \
 				monitor.c
 # Routine
 ROUT_SRC	=	routine_actions.c \
-				routine_loop.c \
+				routine_forks.c \
 				routine.c
 # Utils
 UTILS_SRC	=	utils.c

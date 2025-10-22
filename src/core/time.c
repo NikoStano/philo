@@ -6,13 +6,11 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:08:37 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 10:54:53 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/22 19:03:25 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
-
-#include "philo.h"
+#include "../../include/philo.h"
 
 long	get_current_time(void)
 {
@@ -27,15 +25,6 @@ long	time_diff(long start, long end)
 	return (end - start);
 }
 
-/**
- * @brief Precise sleep function with microsecond accuracy
- * @param [in] usec Duration to sleep in microseconds
- *
- * @details
- * More accurate than standard usleep() for short durations.
- * Uses usleep() in small intervals to allow responsive interruption.
- * Checks simulation_stop frequently for graceful shutdown.
- */
 void	precise_usleep(long usec)
 {
 	long	start;

@@ -6,11 +6,11 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 18:33:05 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/17 10:23:47 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/22 19:03:14 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "../../include/philo.h"
 
 static int	create_thread_large(t_simulation *sim, int i, pthread_attr_t *a)
 {
