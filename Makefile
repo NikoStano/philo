@@ -6,7 +6,7 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/22 18:59:42 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/10/22 21:12:12 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@echo "$(CYAN)[ → ] Linking $(BOLD)$(NAME)...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-	@echo "$(GREEN)[ ✓ ] $(BOLD)$(NAME) compiled successfully!$(RESET)"
+	@echo "$(GREEN)[ ✓ ] $(BOLD)$(NAME)$(GREEN) compiled successfully!$(RESET)"
 
 $(DIR_OBJS)%.o: %.c
 	@mkdir -p $(dir $@)
@@ -78,11 +78,11 @@ $(DIR_OBJS)%.o: %.c
 -include $(DEPS)
 
 clean:
-	@echo "$(RED)[🧹 ] Cleaning object files...$(RESET)"
+	@echo "$(RED)[ 🧹] Cleaning object files...$(RESET)"
 	@rm -rf $(DIR_OBJS)
 
 fclean: clean
-	@echo "$(RED)[🧹 ] Cleaning executable...$(RESET)"
+	@echo "$(RED)[ 🧹] Cleaning executable...$(RESET)"
 	@rm -f $(NAME)
 	@rm -rf logs/
 
