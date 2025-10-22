@@ -6,35 +6,52 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/19 23:26:23 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/10/22 18:07:29 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 		=	philo
 
+#  < --- Compilation --- >
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -pthread
 CFLAGS_D	=	-g -fsanitize=thread
 
 INCLUDE		=	include
-DIR_SRCS	=	src/
+
+#  < --- Directories --- >
 DIR_OBJS	=	obj/
+CORE_DIR	=	src/core/
+MONI_DIR	=	src/monitor/
+ROUT_DIR	=	src/routine/
+UTILS_DIR	=	src/utils/
 
-SRCS		=	$(DIR_SRCS)init.c \
-				$(DIR_SRCS)parse.c \
-				$(DIR_SRCS)main.c \
-				$(DIR_SRCS)thread.c \
-				$(DIR_SRCS)monitor.c \
-				$(DIR_SRCS)monitor_check.c \
-				$(DIR_SRCS)routine.c \
-				$(DIR_SRCS)routine_loop.c \
-				$(DIR_SRCS)routine_actions.c \
-				$(DIR_SRCS)time.c \
-				$(DIR_SRCS)utils.c
+#  < --- Sources --- >
+# Core
+CORE_SRC	=	init.c \
+				main.c \
+				parse.c \
+				thread.c \
+				time.c
+# Monitor
+MONI_SRC	=	monitor_check.c \
+				monitor.c
+# Routine
+ROUT_SRC	=	routine_actions.c \
+				routine_loop.c \
+				routine.c
+# Utils
+UTILS_SRC	=	utils.c
 
-OBJS 		=	$(SRCS:$(DIR_SRCS)%.c=$(DIR_OBJS)%.o)
+#  < --- All Sources --- >
+SRCS		=	$(addprefix $(CORE_DIR), $(CORE_SRC)) \
+				$(addprefix $(MONI_DIR), $(MONI_SRC)) \
+				$(addprefix $(ROUT_DIR), $(ROUT_SRC)) \
+				$(addprefix $(UTILS_DIR), $(UTILS_SRC))
+OBJS 		=	$(SRCS:%.c=$(DIR_OBJS)%.o)
 DEPS 		=	$(OBJS:.o=.d)
 
+#  < --- Colors --- >
 RED			=	\033[0;31m
 GREEN		=	\033[0;32m
 L_GREEN		=	\033[1;32m
@@ -45,6 +62,7 @@ CYAN		=	\033[0;36m
 BOLD		=	\033[1m
 RESET		=	\033[0m
 
+#  < --- Rules --- >
 all: $(NAME)
 
 $(NAME): $(OBJS)
@@ -52,8 +70,8 @@ $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	@echo "$(GREEN)[ ✓ ] $(BOLD)$(NAME) compiled successfully!$(RESET)"
 
-$(DIR_OBJS)%.o: $(DIR_SRCS)%.c
-	@mkdir -p $(DIR_OBJS)
+$(DIR_OBJS)%.o: %.c
+	@mkdir -p $(dir $@)
 	@echo "$(YELLOW)[ ℹ ] Compiling $(BOLD)$<...$(RESET)"
 	@$(CC) $(CFLAGS) -MMD -MP -I$(INCLUDE) -c $< -o $@
 
@@ -70,6 +88,7 @@ fclean: clean
 
 re: fclean all
 
+#  <^\____ Norminette check By Me ___/^>
 norminette:
 	@echo "$(CYAN)[ ℹ ] Running norminette $(BOLD)BY NISTANOJ...$(RESET)"
 	@if command -v norminette > /dev/null 2>&1; then \
@@ -97,6 +116,7 @@ norminette:
 		echo "$(GREEN)[ ✓ ] Norminette $(BOLD)passed !$(RESET)"; \
 	fi;
 
+#  <^\____ Tester By Me ___/^>
 test:
 	@echo "$(YELLOW)╔════════════════════════════════════╗$(RESET)"
 	@echo "$(YELLOW)║      Launching test on philo       ║$(RESET)"
@@ -110,17 +130,21 @@ test:
 		cat philo_tester/test_philo.sh > test_philo.sh; \
 		chmod +x test_philo.sh; \
 		rm -rf philo_tester; \
-		echo "$(GREEN)[ ✓ ] philo_tester cloned successfully!$(RESET)"; \
+		echo "$(GREEN)[ ✓ ] philo_tester $(BOLD)cloned successfully!$(RESET)"; \
 	fi
 	@echo "$(CYAN)[ → ] Recompiling philosophers for tests...$(RESET)"
 	@$(MAKE) -s re
 	@echo "$(CYAN)[ → ] Running all tests...$(RESET)"
-#	To print results in html colored file
-# 	@./test_philo.sh | aha -b > results.html || true
-	@./test_philo.sh || true
-	@echo "$(CYAN)[ ℹ ] All tests ran! Cleaning up...$(RESET)"
+	@./test_philo.sh
+	@if [ $$? -ne 0 ]; then \
+		echo "$(RED)[ ✗ ] Some tests failed! Cleaning up...$(RESET)"; \
+		rm -f test_philo.sh; \
+		exit 1; \
+	else \
+		echo "$(GREEN)[ ✓ ] All tests passed successfully!$(RESET)"; \
+	fi
+	@echo "$(CYAN)[ ℹ ] Cleaning up...$(RESET)"
 	@rm -f test_philo.sh
-	@echo "$(L_GREEN)[ ✓ ] All tests completed$(RESET)"
 	@exit 0
 
 .PHONY: all clean fclean re norminette test
