@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 18:08:34 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/22 19:03:42 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/26 22:04:13 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	philo_eat(t_philo *philo)
 {
 	if (take_forks(philo) != 0)
 		return ;
-	print_status(philo, "is eating");
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	philo->last_meal_time = get_current_time();
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->data->meal_mutex);
+	print_status(philo, "is eating");
 	precise_usleep(philo->data->time_to_eat * 1000);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
@@ -52,12 +52,15 @@ void	philo_think(t_philo *philo)
 		think_time = \
 philo->data->time_to_die - philo->data->time_to_eat - \
 philo->data->time_to_sleep;
-		think_time = (think_time / 2) - 10;
-		if (think_time > 20)
-			think_time = 20;
-		if (think_time < 0)
-			think_time = 0;
-		precise_usleep(think_time * 1000);
+		if (think_time > 0)
+		{
+			think_time = (think_time * 2) / 3;
+			if (think_time > 600)
+				think_time = 600;
+			if (think_time < 1)
+				think_time = 1;
+			precise_usleep(think_time * 1000);
+		}
 	}
 }
 

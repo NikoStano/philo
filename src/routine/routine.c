@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 17:47:24 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/22 19:03:49 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/10/26 22:05:52 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,15 @@ static void	philo_initial_delay(t_philo *philo)
 	{
 		if (philo->data->nb_philos >= 100)
 			usleep((philo->id * 1000) % 5000);
+		else if (philo->data->nb_philos % 2 != 0)
+		{
+			if (philo->id % 2 == 0)
+				precise_usleep((philo->data->time_to_eat * 800));
+			else if (philo->id == philo->data->nb_philos)
+				precise_usleep((philo->data->time_to_eat * 1600));
+		}
 		else if (philo->id % 2 == 0)
-			usleep(100);
-		else
-			usleep(200);
+			precise_usleep(1000);
 	}
 }
 

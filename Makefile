@@ -6,7 +6,7 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/22 21:12:12 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/10/26 21:25:17 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -144,7 +144,7 @@ test:
 		echo "$(GREEN)[ ✓ ] All tests passed successfully!$(RESET)"; \
 	fi
 	@echo "$(CYAN)[ ℹ ] Cleaning up...$(RESET)"
-	@rm -f test_philo.sh
+# 	@rm -f test_philo.sh
 	@exit 0
 
 .PHONY: all clean fclean re norminette test
