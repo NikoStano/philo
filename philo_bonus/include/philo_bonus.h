@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/07 14:04:40 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/30 17:05:17 by nistanoj         ###   ########.fr       */
+/*   Created: 2025/10/26 22:30:00 by nistanoj          #+#    #+#             */
+/*   Updated: 2025/10/30 17:05:28 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
 # include <pthread.h>
+# include <semaphore.h>
+# include <signal.h>
 # include <sys/time.h>
+# include <sys/wait.h>
+# include <fcntl.h>
 
 # define MAX_PHILOSOPHERS 200
-# define PTHREAD_STACK_MIN 16384
 
 typedef enum e_state
 {
@@ -44,10 +47,11 @@ typedef struct s_data
 	int				must_eat_count;
 	long			start_time;
 	int				simulation_stop;
-	int				all_ate;
-	pthread_mutex_t	print_mutex;
-	pthread_mutex_t	stop_mutex;
-	pthread_mutex_t	meal_mutex;
+	sem_t			*forks;
+	sem_t			*print_sem;
+	sem_t			*stop_sem;
+	sem_t			*meal_sem;
+	sem_t			*dead_sem;
 }	t_data;
 
 typedef struct s_philo
@@ -56,18 +60,16 @@ typedef struct s_philo
 	int				meals_eaten;
 	long			last_meal_time;
 	t_state			state;
-	pthread_t		thread;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
+	pid_t			pid;
 	t_data			*data;
+	pthread_t		monitor_thread;
 }	t_philo;
 
 typedef struct s_simulation
 {
 	t_data			data;
 	t_philo			philos[MAX_PHILOSOPHERS];
-	pthread_mutex_t	forks[MAX_PHILOSOPHERS];
-	pthread_t		monitor_thread;
+	pid_t			pids[MAX_PHILOSOPHERS];
 }	t_simulation;
 
 /* ************************************************************************** */
@@ -81,21 +83,12 @@ int		init_simulation(t_simulation *sim, char **argv);
 /* < --- parse.c --- > */
 int		validate_args(int argc, char **argv);
 
-/* < --- thread.c --- > */
+/* < --- process.c --- > */
 int		create_philosophers(t_simulation *sim);
 
 /* < --- time.c --- > */
 long	get_current_time(void);
-long	time_diff(long start, long end);
 void	precise_usleep(long usec);
-
-/* -------------------------------- Monitor --------------------------------- */
-/* < --- monitor_check.c --- > */
-int		check_death(t_simulation *sim);
-int		check_all_ate(t_simulation *sim);
-
-/* < --- monitor.c --- > */
-void	*monitor_routine(void *arg);
 
 /* -------------------------------- Routine --------------------------------- */
 /* < --- routine_actions.c --- > */
@@ -104,16 +97,16 @@ void	philo_sleep(t_philo *philo);
 void	philo_think(t_philo *philo);
 void	philo_loop(t_philo *philo);
 
-/* < --- routine_forks.c ---> */
-int		take_forks(t_philo *philo);
-
 /* < --- routine_utils.c --- > */
 int		should_stop(t_philo *philo);
-int		check_meals_finished(t_philo *philo);
+int		should_continue(t_philo *philo);
 long	calculate_odd_think_time(t_philo *philo, long safety_margin);
 
 /* < --- routine.c --- > */
-void	*philosopher_routine(void *arg);
+void	philosopher_routine(t_philo *philo);
+
+/* < --- monitor.c --- > */
+void	*monitor_routine(void *arg);
 
 /* --------------------------------- Utils ---------------------------------- */
 int		ft_atoi(const char *str);

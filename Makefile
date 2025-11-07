@@ -6,7 +6,7 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/26 21:25:17 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/11/07 05:44:14 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ MONI_SRC	=	monitor_check.c \
 # Routine
 ROUT_SRC	=	routine_actions.c \
 				routine_forks.c \
+				routine_utils.c \
 				routine.c
 # Utils
 UTILS_SRC	=	utils.c
@@ -64,6 +65,7 @@ RESET		=	\033[0m
 
 #  < --- Rules --- >
 all: $(NAME)
+	@echo "$(GREEN)[ ✓ ] Everything is up to date.$(RESET)"
 
 $(NAME): $(OBJS)
 	@echo "$(CYAN)[ → ] Linking $(BOLD)$(NAME)...$(RESET)"
@@ -79,14 +81,19 @@ $(DIR_OBJS)%.o: %.c
 
 clean:
 	@echo "$(RED)[ 🧹] Cleaning object files...$(RESET)"
+	@$(MAKE) -s -C philo_bonus clean
 	@rm -rf $(DIR_OBJS)
 
 fclean: clean
-	@echo "$(RED)[ 🧹] Cleaning executable...$(RESET)"
+	@echo "$(RED)[ 🧹] Cleaning $(BOLD)$(NAME) $(RED)executable...$(RESET)"
+	@$(MAKE) -s -C philo_bonus fclean
 	@rm -f $(NAME)
-	@rm -rf logs/
 
 re: fclean all
+
+#  <^\____ Bonus Rules ___/^>
+bonus: all
+	@$(MAKE) -s -C philo_bonus
 
 #  <^\____ Norminette check By Me ___/^>
 norminette:
@@ -136,15 +143,12 @@ test:
 	@$(MAKE) -s re
 	@echo "$(CYAN)[ → ] Running all tests...$(RESET)"
 	@./test_philo.sh
-	@if [ $$? -ne 0 ]; then \
-		echo "$(RED)[ ✗ ] Some tests failed! Cleaning up...$(RESET)"; \
-		rm -f test_philo.sh; \
-		exit 1; \
-	else \
-		echo "$(GREEN)[ ✓ ] All tests passed successfully!$(RESET)"; \
-	fi
 	@echo "$(CYAN)[ ℹ ] Cleaning up...$(RESET)"
-# 	@rm -f test_philo.sh
+	@rm -f test_philo.sh
 	@exit 0
 
-.PHONY: all clean fclean re norminette test
+clean_test : fclean
+	@rm -rf logs/
+	@clear
+
+.PHONY: all clean fclean re bonus norminette test clean_test

@@ -5,25 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/07 18:08:34 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/30 17:02:51 by nistanoj         ###   ########.fr       */
+/*   Created: 2025/10/26 22:30:00 by nistanoj          #+#    #+#             */
+/*   Updated: 2025/10/30 17:06:23 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/philo.h"
+#include "../../include/philo_bonus.h"
 
 void	philo_eat(t_philo *philo)
 {
-	if (take_forks(philo) != 0)
-		return ;
-	pthread_mutex_lock(&philo->data->meal_mutex);
+	sem_wait(philo->data->forks);
+	print_status(philo, "has taken a fork");
+	sem_wait(philo->data->forks);
+	print_status(philo, "has taken a fork");
+	sem_wait(philo->data->meal_sem);
 	philo->last_meal_time = get_current_time();
 	philo->meals_eaten++;
-	pthread_mutex_unlock(&philo->data->meal_mutex);
+	sem_post(philo->data->meal_sem);
 	print_status(philo, "is eating");
 	precise_usleep(philo->data->time_to_eat * 1000);
-	pthread_mutex_unlock(philo->left_fork);
-	pthread_mutex_unlock(philo->right_fork);
+	sem_post(philo->data->forks);
+	sem_post(philo->data->forks);
 }
 
 void	philo_sleep(t_philo *philo)
@@ -59,24 +61,14 @@ void	philo_think(t_philo *philo)
 
 void	philo_loop(t_philo *philo)
 {
-	int	finished;
-
-	finished = 0;
 	while (!should_stop(philo))
 	{
-		if (!finished)
-			philo_eat(philo);
+		philo_eat(philo);
+		if (!should_continue(philo))
+			break ;
+		philo_sleep(philo);
 		if (should_stop(philo))
 			break ;
-		finished = check_meals_finished(philo);
-		if (!finished)
-		{
-			philo_sleep(philo);
-			if (should_stop(philo))
-				break ;
-			philo_think(philo);
-		}
-		else
-			usleep(1000);
+		philo_think(philo);
 	}
 }
