@@ -6,7 +6,7 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/26 22:30:00 by nistanoj          #+#    #+#              #
-#    Updated: 2025/10/30 17:04:26 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/11/10 23:01:34 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,35 +17,26 @@ CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -pthread
 DEPFLAGS	=	-MMD -MP
 COMPILE		=	$(CC) $(CFLAGS) $(DEPFLAGS)
-CFLAGS_D	=	-g -fsanitize=thread
-
-INCLUDE		=	include
 
 #  < --- Directories --- >
+INCLUDE		=	include
 DIR_OBJS	=	obj/
-CORE_DIR	=	src/core/
-ROUT_DIR	=	src/routine/
-UTILS_DIR	=	src/utils/
+SRC_DIR		=	src/
 
 #  < --- Sources --- >
-# Core
-CORE_SRC	=	init.c \
-				main.c \
-				parse.c \
-				process.c \
-				time.c
-# Routine
-ROUT_SRC	=	monitor.c \
-				routine_actions.c \
-				routine_utils.c \
-				routine.c
-# Utils
-UTILS_SRC	=	utils.c
+SRC_FILE	=	core/init.c \
+				core/main.c \
+				core/parse.c \
+				core/process.c \
+				core/time.c \
+				routine/monitor.c \
+				routine/routine_actions.c \
+				routine/routine_utils.c \
+				routine/routine.c \
+				utils/utils.c
 
 #  < --- All Sources --- >
-SRCS		=	$(addprefix $(CORE_DIR), $(CORE_SRC)) \
-				$(addprefix $(ROUT_DIR), $(ROUT_SRC)) \
-				$(addprefix $(UTILS_DIR), $(UTILS_SRC))
+SRCS		=	$(addprefix $(SRC_DIR), $(SRC_FILE))
 OBJS 		=	$(SRCS:%.c=$(DIR_OBJS)%.o)
 DEPS 		=	$(OBJS:.o=.d)
 

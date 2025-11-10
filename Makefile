@@ -6,7 +6,7 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/11/07 05:44:14 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/11/10 23:04:41 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,40 +15,28 @@ NAME 		=	philo
 #  < --- Compilation --- >
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -pthread
-CFLAGS_D	=	-g -fsanitize=thread
-
-INCLUDE		=	include
 
 #  < --- Directories --- >
+INCLUDE		=	include
 DIR_OBJS	=	obj/
-CORE_DIR	=	src/core/
-MONI_DIR	=	src/monitor/
-ROUT_DIR	=	src/routine/
-UTILS_DIR	=	src/utils/
+SRC_DIR		=	src/
 
 #  < --- Sources --- >
-# Core
-CORE_SRC	=	init.c \
-				main.c \
-				parse.c \
-				thread.c \
-				time.c
-# Monitor
-MONI_SRC	=	monitor_check.c \
-				monitor.c
-# Routine
-ROUT_SRC	=	routine_actions.c \
-				routine_forks.c \
-				routine_utils.c \
-				routine.c
-# Utils
-UTILS_SRC	=	utils.c
+SRC_FILE	=	core/init.c \
+				core/main.c \
+				core/parse.c \
+				core/thread.c \
+				core/time.c \
+				monitor/monitor_check.c \
+				monitor/monitor.c \
+				routine/routine_actions.c \
+				routine/routine_forks.c \
+				routine/routine_utils.c \
+				routine/routine.c \
+				utils/utils.c
 
 #  < --- All Sources --- >
-SRCS		=	$(addprefix $(CORE_DIR), $(CORE_SRC)) \
-				$(addprefix $(MONI_DIR), $(MONI_SRC)) \
-				$(addprefix $(ROUT_DIR), $(ROUT_SRC)) \
-				$(addprefix $(UTILS_DIR), $(UTILS_SRC))
+SRCS		=	$(addprefix $(SRC_DIR), $(SRC_FILE))
 OBJS 		=	$(SRCS:%.c=$(DIR_OBJS)%.o)
 DEPS 		=	$(OBJS:.o=.d)
 
@@ -148,7 +136,7 @@ test:
 	@exit 0
 
 clean_test : fclean
-	@rm -rf logs/
+	@rm -rf logs/ test_philo.sh
 	@clear
 
 .PHONY: all clean fclean re bonus norminette test clean_test
