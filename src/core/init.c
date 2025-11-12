@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:05:46 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/22 19:02:57 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/11/11 01:48:15 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ static int	init_mutexes(t_simulation *sim)
 {
 	int	i;
 
-	if (pthread_mutex_init(&sim->data.print_mutex, NULL) != 0)
+	if (pthread_mutex_init(&sim->data.print_mutex, NULL))
 		return (1);
-	if (pthread_mutex_init(&sim->data.stop_mutex, NULL) != 0)
+	if (pthread_mutex_init(&sim->data.stop_mutex, NULL))
 		return (1);
-	if (pthread_mutex_init(&sim->data.meal_mutex, NULL) != 0)
+	if (pthread_mutex_init(&sim->data.meal_mutex, NULL))
 		return (1);
 	i = 0;
 	while (i < sim->data.nb_philos)
 	{
-		if (pthread_mutex_init(&sim->forks[i], NULL) != 0)
+		if (pthread_mutex_init(&sim->forks[i], NULL))
 			return (1);
 		i++;
 	}
@@ -66,7 +66,7 @@ int	init_simulation(t_simulation *sim, char **argv)
 	sim->data.all_ate = 0;
 	if (argv[5])
 		sim->data.must_eat_count = ft_atoi(argv[5]);
-	if (init_mutexes(sim) != 0)
+	if (init_mutexes(sim))
 	{
 		printf("Error: Failed to initialize mutexes\n");
 		return (1);

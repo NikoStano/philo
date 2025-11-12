@@ -4,11 +4,9 @@ Une implémentation en C du célèbre problème des philosophes dîneurs, utilis
 
 ## 📋 Table des matières
 
-- [Installation](#installation)
-- [Utilisation](#utilisation)
-- [Tests](#tests)
-- [Algorithme](#algorithme)
-
+- [Utilisation](# 🚀 utilisation)
+- [Tests](# 🧪 tests)
+- [Algorithme](# 🧮 algorithme)
 
 ## 📦 Installation
 
@@ -38,11 +36,12 @@ make
 
 ### Format de sortie
 
-```
+```bash
 [timestamp_ms] philosophe_X action
 ```
 
 Actions possibles :
+
 - `has taken a fork` - a pris une fourchette
 - `is eating` - est en train de manger
 - `is sleeping` - dort
@@ -58,6 +57,7 @@ make test
 ```
 
 Cette commande exécute plusieurs scénarios de test pour valider :
+
 - La détection correcte de la mort
 - L'absence de data races
 - Le respect des contraintes de temps
@@ -81,6 +81,7 @@ Cette commande exécute plusieurs scénarios de test pour valider :
 ### Prévention du deadlock
 
 L'implémentation utilise différentes stratégies possibles :
+
 - Ordre d'acquisition des fourchettes
 - Temporisation
 - Limitation du nombre de philosophes mangeant simultanément

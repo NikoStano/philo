@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 18:31:56 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/27 00:57:13 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/11/11 01:04:22 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	philosopher_died(t_philo *philo)
 	return (0);
 }
 
-int	check_death(t_simulation *sim)
+static int	check_death(t_simulation *sim)
 {
 	int	i;
 
@@ -56,7 +56,7 @@ int	check_death(t_simulation *sim)
 	return (0);
 }
 
-int	check_all_ate(t_simulation *sim)
+static int	check_all_ate(t_simulation *sim)
 {
 	int	i;
 	int	finished_eating;
@@ -80,6 +80,20 @@ int	check_all_ate(t_simulation *sim)
 		sim->data.all_ate = 1;
 		pthread_mutex_unlock(&sim->data.stop_mutex);
 		return (1);
+	}
+	return (0);
+}
+
+int	monitor_checks(t_simulation *sim, int *all_ate_counter)
+{
+	if (check_death(sim))
+		return (1);
+	(*all_ate_counter)++;
+	if (*all_ate_counter >= 3)
+	{
+		if (check_all_ate(sim))
+			return (1);
+		*all_ate_counter = 0;
 	}
 	return (0);
 }

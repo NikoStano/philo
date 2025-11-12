@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:07:23 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/27 01:52:56 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/11/11 01:06:18 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,7 @@ static int	get_check_interval(t_simulation *sim)
 	return (interval);
 }
 
-static int	monitor_checks(t_simulation *sim, int *all_ate_counter)
-{
-	if (check_death(sim))
-		return (1);
-	(*all_ate_counter)++;
-	if (*all_ate_counter >= 3)
-	{
-		if (check_all_ate(sim))
-			return (1);
-		*all_ate_counter = 0;
-	}
-	return (0);
-}
-
-void	*monitor_routine(void *arg)
+void	*monitor(void *arg)
 {
 	t_simulation	*sim;
 	int				all_ate_counter;

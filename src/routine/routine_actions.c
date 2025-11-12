@@ -6,15 +6,30 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 18:08:34 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/30 17:02:51 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/11/11 04:11:55 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
+static int	check_meals_finished(t_philo *philo)
+{
+	int	finished;
+
+	finished = 0;
+	if (philo->data->must_eat_count != -1)
+	{
+		pthread_mutex_lock(&philo->data->meal_mutex);
+		if (philo->meals_eaten >= philo->data->must_eat_count)
+			finished = 1;
+		pthread_mutex_unlock(&philo->data->meal_mutex);
+	}
+	return (finished);
+}
+
 void	philo_eat(t_philo *philo)
 {
-	if (take_forks(philo) != 0)
+	if (take_forks(philo))
 		return ;
 	pthread_mutex_lock(&philo->data->meal_mutex);
 	philo->last_meal_time = get_current_time();
@@ -35,24 +50,24 @@ void	philo_sleep(t_philo *philo)
 void	philo_think(t_philo *philo)
 {
 	long	think_time;
-	long	safety_margin;
+	long	margin;
 
 	print_status(philo, "is thinking");
 	if (philo->data->nb_philos == 1)
 		return ;
-	safety_margin = philo->data->time_to_die - philo->data->time_to_eat
+	margin = philo->data->time_to_die - philo->data->time_to_eat
 		- philo->data->time_to_sleep;
 	if (philo->data->nb_philos % 2 != 0)
 	{
-		think_time = calculate_odd_think_time(philo, safety_margin);
+		think_time = calculate_odd_think_time(philo, margin);
 		if (think_time > 0)
 			precise_usleep(think_time * 1000);
 	}
-	else if (safety_margin < 50)
+	else if (margin < 50)
 	{
 		think_time = (philo->data->time_to_eat / philo->data->nb_philos)
 			* (philo->id % 3);
-		if (think_time > 0 && think_time < safety_margin)
+		if (think_time > 0 && think_time < margin)
 			usleep(think_time * 100);
 	}
 }

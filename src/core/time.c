@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:08:37 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/22 19:03:25 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/11/11 00:58:41 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@ long	get_current_time(void)
 
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
-
-long	time_diff(long start, long end)
-{
-	return (end - start);
 }
 
 void	precise_usleep(long usec)

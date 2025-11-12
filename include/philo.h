@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:04:40 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/30 17:05:17 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/11/13 00:40:10 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,51 +73,30 @@ typedef struct s_simulation
 /* ************************************************************************** */
 /*                          FUNCTION PROTOTYPES                               */
 /* ************************************************************************** */
-
-/* --------------------------------- Core --------------------------------- */
-/* < --- init.c --- > */
 int		init_simulation(t_simulation *sim, char **argv);
-
-/* < --- parse.c --- > */
 int		validate_args(int argc, char **argv);
-
-/* < --- thread.c --- > */
 int		create_philosophers(t_simulation *sim);
-
-/* < --- time.c --- > */
+int		join_philosophers(t_simulation *sim);
 long	get_current_time(void);
-long	time_diff(long start, long end);
 void	precise_usleep(long usec);
 
-/* -------------------------------- Monitor --------------------------------- */
-/* < --- monitor_check.c --- > */
-int		check_death(t_simulation *sim);
-int		check_all_ate(t_simulation *sim);
+/* -------------------------------- Monitor -------------------------------- */
 
-/* < --- monitor.c --- > */
-void	*monitor_routine(void *arg);
+int		monitor_checks(t_simulation *sim, int *all_ate_counter);
+void	*monitor(void *arg);
 
-/* -------------------------------- Routine --------------------------------- */
-/* < --- routine_actions.c --- > */
+/* -------------------------------- Routine -------------------------------- */
 void	philo_eat(t_philo *philo);
 void	philo_sleep(t_philo *philo);
 void	philo_think(t_philo *philo);
 void	philo_loop(t_philo *philo);
-
-/* < --- routine_forks.c ---> */
 int		take_forks(t_philo *philo);
-
-/* < --- routine_utils.c --- > */
 int		should_stop(t_philo *philo);
-int		check_meals_finished(t_philo *philo);
 long	calculate_odd_think_time(t_philo *philo, long safety_margin);
-
-/* < --- routine.c --- > */
 void	*philosopher_routine(void *arg);
 
-/* --------------------------------- Utils ---------------------------------- */
+/* --------------------------------- Utils --------------------------------- */
 int		ft_atoi(const char *str);
-int		is_number(const char *str);
 void	print_status(t_philo *philo, char *status);
 void	cleanup_simulation(t_simulation *sim);
 

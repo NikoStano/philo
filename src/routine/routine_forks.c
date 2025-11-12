@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 14:06:20 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/27 01:24:32 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/11/11 01:35:05 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,7 @@ static int	handle_single_philo(t_philo *philo)
 	return (1);
 }
 
-/**
- * @brief Lock the first fork and print status
- * @param [in] philo Pointer to the philosopher
- * @param [in] first Pointer to the first fork mutex
- * @details
- * Locks the specified fork mutex and prints the status.
- * Checks if the simulation should stop after locking.
- * @return 1 if simulation should stop after locking, 0 otherwise
- */
-int	lock_first_fork(t_philo *philo, pthread_mutex_t *first)
+static int	lock_first_fork(t_philo *philo, pthread_mutex_t *first)
 {
 	pthread_mutex_lock(first);
 	print_status(philo, "has taken a fork");
@@ -42,14 +33,6 @@ int	lock_first_fork(t_philo *philo, pthread_mutex_t *first)
 	return (0);
 }
 
-/**
- * @brief Take forks for philosophers in large groups (>=100)
- * @param [in] philo Pointer to the philosopher
- * @details
- * Philosophers pick up the lower-addressed fork first to prevent deadlock.
- * This strategy helps avoid circular wait conditions.
- * @return 0 on success, 1 if simulation should stop
- */
 static int	take_forks_large(t_philo *philo)
 {
 	pthread_mutex_t	*first;
@@ -72,14 +55,6 @@ static int	take_forks_large(t_philo *philo)
 	return (0);
 }
 
-/**
- * @brief Take forks for philosophers in small groups (<100)
- * @param [in] philo Pointer to the philosopher
- * @details
- * Odd ID philosophers pick up left fork first, even ID pick up right fork first.
- * This alternating strategy helps reduce contention and potential deadlocks.
- * @return 0 on success, 1 if simulation should stop
- */
 static int	take_forks_small(t_philo *philo)
 {
 	pthread_mutex_t	*first;
@@ -102,15 +77,6 @@ static int	take_forks_small(t_philo *philo)
 	return (0);
 }
 
-/**
- * @brief Take forks for the philosopher
- * @param [in] philo Pointer to the philosopher
- * @details
- * Chooses the fork-taking strategy based on the number of philosophers.
- * Uses a specialized strategy for single philosopher, large groups,
- * and small groups.
- * @return 0 on success, 1 if simulation should stop
- */
 int	take_forks(t_philo *philo)
 {
 	if (philo->data->nb_philos == 1)

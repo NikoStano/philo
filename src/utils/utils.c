@@ -6,7 +6,7 @@
 /*   By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/07 17:23:32 by nistanoj          #+#    #+#             */
-/*   Updated: 2025/10/22 19:03:54 by nistanoj         ###   ########.fr       */
+/*   Updated: 2025/11/12 22:02:55 by nistanoj         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,6 @@ int	ft_atoi(const char *str)
 	return (result);
 }
 
-int	is_number(const char *str)
-{
-	int	i;
-
-	if (!str || !str[0])
-		return (0);
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] < '0' || str[i] > '9')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 void	print_status(t_philo *philo, char *status)
 {
 	long	timestamp;
@@ -59,7 +43,7 @@ void	print_status(t_philo *philo, char *status)
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
-static void	destroy_mutexes(t_simulation *sim)
+void	cleanup_simulation(t_simulation *sim)
 {
 	int	i;
 
@@ -72,9 +56,4 @@ static void	destroy_mutexes(t_simulation *sim)
 		pthread_mutex_destroy(&sim->forks[i]);
 		i++;
 	}
-}
-
-void	cleanup_simulation(t_simulation *sim)
-{
-	destroy_mutexes(sim);
 }

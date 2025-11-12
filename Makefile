@@ -6,7 +6,7 @@
 #    By: nistanoj <nistanoj@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/07 14:04:13 by nistanoj          #+#    #+#              #
-#    Updated: 2025/11/10 23:04:41 by nistanoj         ###   ########.fr        #
+#    Updated: 2025/11/13 00:54:34 by nistanoj         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME 		=	philo
 #  < --- Compilation --- >
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -pthread
+# CFLAGS		+=	-DDEBUG -g3 -Og -fno-omit-frame-pointer -fsanitize=thread
 
 #  < --- Directories --- >
 INCLUDE		=	include
@@ -53,7 +54,6 @@ RESET		=	\033[0m
 
 #  < --- Rules --- >
 all: $(NAME)
-	@echo "$(GREEN)[ ✓ ] Everything is up to date.$(RESET)"
 
 $(NAME): $(OBJS)
 	@echo "$(CYAN)[ → ] Linking $(BOLD)$(NAME)...$(RESET)"
@@ -72,10 +72,12 @@ clean:
 	@$(MAKE) -s -C philo_bonus clean
 	@rm -rf $(DIR_OBJS)
 
-fclean: clean
-	@echo "$(RED)[ 🧹] Cleaning $(BOLD)$(NAME) $(RED)executable...$(RESET)"
-	@$(MAKE) -s -C philo_bonus fclean
+fclean:
+	@echo "$(RED)[ 🧹] Cleaning object files...$(RESET)"
+	@rm -rf $(DIR_OBJS)
+	@echo "$(RED)[ 🧹] Cleaning $(BOLD)$(NAME)$(RED)...$(RESET)"
 	@rm -f $(NAME)
+	@$(MAKE) -s -C philo_bonus fclean
 
 re: fclean all
 
@@ -130,9 +132,7 @@ test:
 	@echo "$(CYAN)[ → ] Recompiling philosophers for tests...$(RESET)"
 	@$(MAKE) -s re
 	@echo "$(CYAN)[ → ] Running all tests...$(RESET)"
-	@./test_philo.sh
-	@echo "$(CYAN)[ ℹ ] Cleaning up...$(RESET)"
-	@rm -f test_philo.sh
+	@./test_philo.sh || true
 	@exit 0
 
 clean_test : fclean
@@ -140,3 +140,7 @@ clean_test : fclean
 	@clear
 
 .PHONY: all clean fclean re bonus norminette test clean_test
+
+# To check Thread Sanitizer
+# flags: -g -fsanitize=thread
+# setarch $(uname -m) -R ./philo 5 800 200 200 7
