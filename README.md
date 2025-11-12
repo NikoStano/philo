@@ -4,11 +4,12 @@ Une implémentation en C du célèbre problème des philosophes dîneurs, utilis
 
 ## 📋 Table des matières
 
-- [Utilisation](# 🚀 utilisation)
-- [Tests](# 🧪 tests)
-- [Algorithme](# 🧮 algorithme)
+- [Installation](#installation)
+- [Utilisation](#utilisation)
+- [Tests](#tests)
+- [Algorithme](#algorithme)
 
-## 📦 Installation
+## Installation
 
 ```bash
 git clone https://github.com/NikoStano/philo.git
@@ -16,7 +17,7 @@ cd philo
 make
 ```
 
-## 🚀 Utilisation
+## Utilisation
 
 ### Syntaxe
 
@@ -48,7 +49,7 @@ Actions possibles :
 - `is thinking` - réfléchit
 - `died` - est mort
 
-## 🧪 Tests
+## Tests
 
 Lancer la suite de tests complète :
 
@@ -63,7 +64,7 @@ Cette commande exécute plusieurs scénarios de test pour valider :
 - Le respect des contraintes de temps
 - La terminaison propre du programme
 
-## 🧮 Algorithme
+## Algorithme
 
 ### Principe de base
 
