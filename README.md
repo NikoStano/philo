@@ -1,4 +1,5 @@
 # 🍝 Dining Philosophers
+[![nistanoj's 42 Philosophers Score](https://badge.nimon.fr/api/v2/cmgjygisn1482501pa9h6l9sg4/project/4594510)](https://github.com/Nimon77/badge42)
 
 Une implémentation en C du célèbre problème des philosophes dîneurs, utilisant le multithreading et les mutex pour illustrer les concepts de synchronisation et de gestion des ressources partagées.
 
