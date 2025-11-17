@@ -1,21 +1,11 @@
-# 🍝 Dining Philosophers [![nistanoj's 42 Philosophers Score](https://badge.nimon.fr/api/v2/cmgjygisn1482501pa9h6l9sg4/project/4594510)](https://github.com/Nimon77/badge42)
+# 🍝 Philosophers [![nistanoj's 42 Philosophers Score](https://badge.nimon.fr/api/v2/cmgjygisn1482501pa9h6l9sg4/project/4594510)](https://github.com/Nimon77/badge42)
 
-Une implémentation en C du célèbre problème des philosophes dîneurs, utilisant le multithreading et les mutex pour illustrer les concepts de synchronisation et de gestion des ressources partagées.
+Une implémentation en C du célèbre problème du dîner des philosophes, utilisant le multithreading et les mutex pour illustrer les concepts de synchronisation et de gestion des ressources partagées.
 
 ## 📋 Table des matières
 
-- [Installation](#installation)
 - [Utilisation](#utilisation)
-- [Tests](#tests)
 - [Algorithme](#algorithme)
-
-## Installation
-
-```bash
-git clone https://github.com/NikoStano/philo.git
-cd philo
-make
-```
 
 ## Utilisation
 
@@ -34,35 +24,6 @@ make
 | `temps_manger` | int | Durée d'un repas | ms |
 | `temps_dormir` | int | Durée du sommeil après manger | ms |
 | `nb_repas` | int | Nombre de repas requis (optionnel) | - |
-
-### Format de sortie
-
-```bash
-[timestamp_ms] philosophe_X action
-```
-
-Actions possibles :
-
-- `has taken a fork` - a pris une fourchette
-- `is eating` - est en train de manger
-- `is sleeping` - dort
-- `is thinking` - réfléchit
-- `died` - est mort
-
-## Tests
-
-Lancer la suite de tests complète :
-
-```bash
-make test
-```
-
-Cette commande exécute plusieurs scénarios de test pour valider :
-
-- La détection correcte de la mort
-- L'absence de data races
-- Le respect des contraintes de temps
-- La terminaison propre du programme
 
 ## Algorithme
 
